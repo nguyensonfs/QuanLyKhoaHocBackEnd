@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\QuanLyKhoaHoc.Application\QuanLyKhoaHoc.Application.csproj" />
     <ProjectReference Include="..\QuanLyKhoaHoc.Domain\QuanLyKhoaHoc.Domain.csproj" />
+    <ProjectReference Include="..\QuanLyKhoaHoc.Infrastructure\QuanLyKhoaHoc.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

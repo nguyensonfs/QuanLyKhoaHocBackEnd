@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuanLyKhoaHoc.Api\QuanLyKhoaHoc.Api.csproj" />
     <ProjectReference Include="..\QuanLyKhoaHoc.Domain\QuanLyKhoaHoc.Domain.csproj" />
   </ItemGroup>
 
