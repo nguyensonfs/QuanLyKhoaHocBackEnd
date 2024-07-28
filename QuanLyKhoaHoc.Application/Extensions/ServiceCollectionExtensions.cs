@@ -11,6 +11,9 @@ namespace QuanLyKhoaHoc.Application.Extensions
         {
             services.AddScoped<LoaiKhoaHocConverter>();
             services.AddScoped<ILoaiKhoaHocService, LoaiKhoaHocService>();
+
+            services.AddScoped<LoaiBaiVietConverter>();
+            services.AddScoped<ILoaiBaiVietService, LoaiBaiVietService>();
         }
     }
 }
