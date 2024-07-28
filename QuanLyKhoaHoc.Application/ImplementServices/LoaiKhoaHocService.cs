@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests;
@@ -67,10 +68,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
 
 
-        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> GetAllLoaiKhoahocs()
+        public async Task<IQueryable<DataResponseLoaiKhoaHoc>> GetAllLoaiKhoahocs()
         {
-            throw new NotImplementedException();
-
+            var loaiKhoaHocs = await _baseLoaiKhoaHocRepository.GetAllAsync().Result.ToListAsync();
+            var dtoList = loaiKhoaHocs.Select(x => _converter.EntityToDTO(x)).AsQueryable();
+            return dtoList;
         }
 
         public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> ThemLoaiKhoaHoc(Request_ThemLoaiKhoaHoc request)

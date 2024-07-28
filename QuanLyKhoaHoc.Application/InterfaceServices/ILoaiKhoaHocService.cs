@@ -9,6 +9,6 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
         Task<ResponseObject<DataResponseLoaiKhoaHoc>> ThemLoaiKhoaHoc(Request_ThemLoaiKhoaHoc request);
         Task<ResponseObject<DataResponseLoaiKhoaHoc>> CapNhatThongTinLoaiKhoaHoc(Request_SuaLoaiKhoaHoc request);
         Task<string> XoaLoaiKhoaHoc(int loaiKhoaHocId);
-        Task<ResponseObject<DataResponseLoaiKhoaHoc>> GetAllLoaiKhoahocs();
+        Task<IQueryable<DataResponseLoaiKhoaHoc>> GetAllLoaiKhoahocs();
     }
 }
