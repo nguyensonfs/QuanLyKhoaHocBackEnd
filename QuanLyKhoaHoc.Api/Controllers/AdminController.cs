@@ -2,6 +2,7 @@
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiBaiVietRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.QuyenHanRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -11,11 +12,13 @@ namespace QuanLyKhoaHoc.Api.Controllers
     {
         private readonly ILoaiKhoaHocService _loaiKhoaHocService;
         private readonly ILoaiBaiVietService _loaiBaiVietService;
+        private readonly IQuyenHanService _quyenHanService;
 
-        public AdminController(ILoaiKhoaHocService loaiKhoaHocService, ILoaiBaiVietService loaiBaiVietService)
+        public AdminController(ILoaiKhoaHocService loaiKhoaHocService, ILoaiBaiVietService loaiBaiVietService, IQuyenHanService quyenHananService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
+            _quyenHanService = quyenHananService;
         }
 
         [HttpPost("ThemLoaiKhoaHoc")]
@@ -53,6 +56,24 @@ namespace QuanLyKhoaHoc.Api.Controllers
         public async Task<IActionResult> XoaLoaiBaiViet([FromRoute] int loaiBaiVietId)
         {
             return Ok(await _loaiBaiVietService.XoaLoaiBaiViet(loaiBaiVietId));
+        }
+
+        [HttpPost("ThemQuyenHan")]
+        public async Task<IActionResult> ThemQuyenHan([FromBody] Request_ThemQuyenHan request)
+        {
+            return Ok(await _quyenHanService.ThemQuyenHan(request));
+        }
+
+        [HttpPut("CapNhatThongTinQuyenHan")]
+        public async Task<IActionResult> CapNhatThongTinQuyenHan([FromBody] Request_SuaQuyenHan request)
+        {
+            return Ok(await _quyenHanService.CapNhatThongTinQuyenHan(request));
+        }
+
+        [HttpDelete("XoaQuyenHan/{quyenHanID}")]
+        public async Task<IActionResult> XoaQuyenHan([FromRoute] int quyenHanID)
+        {
+            return Ok(await _quyenHanService.XoaQuyenHan(quyenHanID));
         }
 
     }

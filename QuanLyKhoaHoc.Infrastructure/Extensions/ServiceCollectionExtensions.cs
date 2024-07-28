@@ -18,6 +18,7 @@ namespace QuanLyKhoaHoc.Infrastructure.Extensions
             services.AddScoped<IDBContext, AppDBContext>();
             services.AddScoped<IBaseRepository<LoaiKhoaHoc>, BaseRepository<LoaiKhoaHoc>>();
             services.AddScoped<IBaseRepository<LoaiBaiViet>, BaseRepository<LoaiBaiViet>>();
+            services.AddScoped<IBaseRepository<QuyenHan>, BaseRepository<QuyenHan>>();
         }
     }
 }

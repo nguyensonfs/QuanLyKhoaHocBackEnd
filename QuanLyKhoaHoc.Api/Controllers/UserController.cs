@@ -10,11 +10,13 @@ namespace QuanLyKhoaHoc.Api.Controllers
     {
         private readonly ILoaiKhoaHocService _loaiKhoaHocService;
         private readonly ILoaiBaiVietService _loaiBaiVietService;
+        private readonly IQuyenHanService _quyenHanService;
 
-        public UserController(ILoaiKhoaHocService loaiKhoaHocService, ILoaiBaiVietService loaiBaiVietService)
+        public UserController(ILoaiKhoaHocService loaiKhoaHocService, ILoaiBaiVietService loaiBaiVietService, IQuyenHanService quyenHanService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
+            _quyenHanService = quyenHanService;
         }
 
 
@@ -28,6 +30,12 @@ namespace QuanLyKhoaHoc.Api.Controllers
         public async Task<IActionResult> GetAllLoaiBaiViets()
         {
             return Ok(await _loaiBaiVietService.GetAllLoaiBaiViets());
+        }
+
+        [HttpGet("GetAllQuyenHan")]
+        public async Task<IActionResult> GetAllQuyenHans()
+        {
+            return Ok(await _quyenHanService.GetAllQuyenHans());
         }
     }
 }
