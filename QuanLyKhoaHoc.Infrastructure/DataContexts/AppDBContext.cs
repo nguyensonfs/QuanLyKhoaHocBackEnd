@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Domain.Entities;
-using QuanLyKhoaHoc.Infrastructure.DBContexts;
 
 namespace QuanLyKhoaHoc.Infrastructure.DataContexts
 {
-    public class AppDBContext : DbContext,IAppDBContext
+    public class AppDBContext : DbContext, IAppDBContext
     {
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
 

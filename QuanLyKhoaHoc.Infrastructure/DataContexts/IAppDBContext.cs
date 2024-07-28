@@ -1,6 +1,6 @@
-﻿using QuanLyKhoaHoc.Infrastructure.DataContexts;
+﻿
 
-namespace QuanLyKhoaHoc.Infrastructure.DBContexts
+namespace QuanLyKhoaHoc.Infrastructure.DataContexts
 {
     public interface IAppDBContext : IDBContext
     {
