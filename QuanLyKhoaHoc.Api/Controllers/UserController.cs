@@ -84,10 +84,29 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _khoaHocService.XoaKhoaHoc(khoaHocId));
         }
 
+        [HttpGet("GetAllsChuDe")]
+        public async Task<IActionResult> GetAllsChuDe(int pageSize = 10, int pageNumber = 1)
+        {
+            return Ok(await _chuDeService.GetAlls(pageSize, pageNumber));
+        }
+
+        [HttpGet("GetChuDeById")]
+        public async Task<IActionResult> GetChuDeById([FromRoute] int chuDeId)
+        {
+            return Ok(await _chuDeService.GetChuDeById(chuDeId));
+        }
+
         [HttpPost("ThemChuDe")]
         public async Task<IActionResult> ThemChuDe([FromBody] Request_AddChuDe request)
         {
             return Ok(await _chuDeService.AddChuDe(request));
         }
+
+        [HttpPut("CapNhatChuDe")]
+        public async Task<IActionResult> CapNhatChuDe([FromBody] Request_EditChuDe request)
+        {
+            return Ok(await _chuDeService.UpdateChuDe(request));
+        }
+
     }
 }
