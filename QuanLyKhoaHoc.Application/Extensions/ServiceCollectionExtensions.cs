@@ -17,6 +17,9 @@ namespace QuanLyKhoaHoc.Application.Extensions
 
             services.AddScoped<QuyenHanConverter>();
             services.AddScoped<IQuyenHanService, QuyenHanService>();
+
+            services.AddScoped<KhoaHocConverter>();
+            services.AddScoped<IKhoaHocService, KhoaHocService>();
         }
     }
 }
