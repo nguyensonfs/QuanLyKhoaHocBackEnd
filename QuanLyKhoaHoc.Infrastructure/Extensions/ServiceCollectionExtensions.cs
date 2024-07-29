@@ -12,7 +12,16 @@ namespace QuanLyKhoaHoc.Infrastructure.Extensions
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var defaultConnection = configuration.GetConnectionString("DefaultConnection");
+            var workConnectionString = configuration.GetConnectionString("WorkConnection");
+            
+            string connectionString = "";
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            if (environment == "Work") {
+                connectionString = workConnectionString;
+            }
+
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connectionString));
 
             services.AddScoped<IDBContext, AppDBContext>();
