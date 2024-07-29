@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
@@ -12,13 +13,19 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly ILoaiBaiVietService _loaiBaiVietService;
         private readonly IQuyenHanService _quyenHanService;
         private readonly IKhoaHocService _khoaHocService;
+        private readonly IChuDeService _chuDeService;
 
-        public UserController(ILoaiKhoaHocService loaiKhoaHocService, ILoaiBaiVietService loaiBaiVietService, IQuyenHanService quyenHanService, IKhoaHocService khoaHocService)
+        public UserController(ILoaiKhoaHocService loaiKhoaHocService,
+                              ILoaiBaiVietService loaiBaiVietService,
+                              IQuyenHanService quyenHanService,
+                              IKhoaHocService khoaHocService,
+                              IChuDeService chuDeService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
             _quyenHanService = quyenHanService;
             _khoaHocService = khoaHocService;
+            _chuDeService = chuDeService;
         }
 
 
@@ -75,6 +82,12 @@ namespace QuanLyKhoaHoc.Api.Controllers
         public async Task<IActionResult> XoaKhoaHoc([FromRoute] int khoaHocId)
         {
             return Ok(await _khoaHocService.XoaKhoaHoc(khoaHocId));
+        }
+
+        [HttpPost("ThemChuDe")]
+        public async Task<IActionResult> ThemChuDe([FromBody] Request_AddChuDe request)
+        {
+            return Ok(await _chuDeService.AddChuDe(request));
         }
     }
 }
