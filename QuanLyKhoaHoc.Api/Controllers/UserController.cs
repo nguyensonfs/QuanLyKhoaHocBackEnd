@@ -2,6 +2,7 @@
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -14,18 +15,21 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly IQuyenHanService _quyenHanService;
         private readonly IKhoaHocService _khoaHocService;
         private readonly IChuDeService _chuDeService;
+        private readonly IStudentService _studentService;
 
         public UserController(ILoaiKhoaHocService loaiKhoaHocService,
                               ILoaiBaiVietService loaiBaiVietService,
                               IQuyenHanService quyenHanService,
                               IKhoaHocService khoaHocService,
-                              IChuDeService chuDeService)
+                              IChuDeService chuDeService,
+                              IStudentService studentService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
             _quyenHanService = quyenHanService;
             _khoaHocService = khoaHocService;
             _chuDeService = chuDeService;
+            _studentService = studentService;
         }
 
 
@@ -106,6 +110,18 @@ namespace QuanLyKhoaHoc.Api.Controllers
         public async Task<IActionResult> CapNhatChuDe([FromBody] Request_EditChuDe request)
         {
             return Ok(await _chuDeService.UpdateChuDe(request));
+        }
+
+        [HttpPost("AddStudent")]
+        public async Task<IActionResult> AddStudent([FromForm] Request_AddStudent request)
+        {
+            return Ok(await _studentService.CreateSudent(request));
+        }
+
+        [HttpPut("UpdateSudent")]
+        public async Task<IActionResult> UpdateSudent([FromForm] Request_UpdateStudent request)
+        {
+            return Ok(await _studentService.UpdateSudent(request));
         }
 
     }
