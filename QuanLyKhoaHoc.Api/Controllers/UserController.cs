@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
 
@@ -61,13 +60,13 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpPost("ThemKhoaHoc")]
-        public async Task<IActionResult> ThemKhoaHoc([FromBody] Request_ThemKhoaHoc request)
+        public async Task<IActionResult> ThemKhoaHoc([FromForm] Request_ThemKhoaHoc request)
         {
             return Ok(await _khoaHocService.ThemKhoaHoc(request));
         }
 
         [HttpPut("SuaThongTinKhoaHoc")]
-        public async Task<IActionResult> SuaThongTinKhoaHoc([FromBody] Request_SuaKhoaHoc request)
+        public async Task<IActionResult> SuaThongTinKhoaHoc([FromForm] Request_SuaKhoaHoc request)
         {
             return Ok(await _khoaHocService.CapNhatThongTinKhoaHoc(request));
         }

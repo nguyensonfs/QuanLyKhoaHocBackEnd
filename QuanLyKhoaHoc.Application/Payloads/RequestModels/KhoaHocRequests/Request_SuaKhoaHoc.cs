@@ -1,4 +1,6 @@
-﻿namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests
+﻿using Microsoft.AspNetCore.Http;
+
+namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests
 {
     public class Request_SuaKhoaHoc
     {
@@ -16,7 +18,7 @@
 
         public int? SoLuongMon { get; set; }
 
-        public string? HinhAnh { get; set; }
+        public IFormFile? HinhAnh { get; set; }
 
         public int? LoaiKhoaHocID { get; set; }
     }

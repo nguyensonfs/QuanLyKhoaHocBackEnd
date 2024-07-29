@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using QuanLyKhoaHoc.Application.Handle.HandleImage;
 using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
@@ -49,7 +50,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     };
                 }
                 khoaHoc.GioiThieu = request.GioiThieu;
-                khoaHoc.HinhAnh = request.HinhAnh;
+                khoaHoc.HinhAnh = await HandleUploadImage.Upfile(request.HinhAnh);
                 khoaHoc.HocPhi = request.HocPhi;
                 khoaHoc.LoaiKhoaHocID = request.LoaiKhoaHocID;
                 khoaHoc.TenKhoaHoc = request.TenKhoaHoc;
@@ -139,7 +140,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 var khoaHoc = new KhoaHoc
                 {
                     TenKhoaHoc = request.TenKhoaHoc,
-                    HinhAnh = request.HinhAnh,
+                    HinhAnh = await HandleUploadImage.Upfile(request.HinhAnh),
                     GioiThieu = request.GioiThieu,
                     HocPhi = request.HocPhi,
                     NoiDung = request.NoiDung,
