@@ -5,6 +5,7 @@ using QuanLyKhoaHoc.Domain.Entities;
 using QuanLyKhoaHoc.Domain.InterfaceRepositories;
 using QuanLyKhoaHoc.Infrastructure.DataContexts;
 using QuanLyKhoaHoc.Infrastructure.ImplementRepositories;
+using System.Net;
 
 namespace QuanLyKhoaHoc.Infrastructure.Extensions
 {
@@ -12,15 +13,15 @@ namespace QuanLyKhoaHoc.Infrastructure.Extensions
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var defaultConnection = configuration.GetConnectionString("DefaultConnection");
-            var workConnectionString = configuration.GetConnectionString("WorkConnection");
-            
-            string connectionString = "";
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var hostName = Dns.GetHostName();
 
-            if (environment == "Work") {
-                connectionString = workConnectionString;
+            var connections = configuration.GetSection("ConnectionStrings").GetChildren().ToDictionary(x => x.Key, x => x.Value);
+
+            if (!connections.TryGetValue(hostName, out var connectionString))
+            {
+                throw new InvalidOperationException($"No connection string configured for host {hostName}");
             }
+
 
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connectionString));
 
@@ -30,6 +31,7 @@ namespace QuanLyKhoaHoc.Infrastructure.Extensions
             services.AddScoped<IBaseRepository<QuyenHan>, BaseRepository<QuyenHan>>();
             services.AddScoped<IBaseRepository<KhoaHoc>, BaseRepository<KhoaHoc>>();
             services.AddScoped<IBaseRepository<ChuDe>, BaseRepository<ChuDe>>();
+            services.AddScoped<IBaseRepository<HocVien>, BaseRepository<HocVien>>();
         }
     }
 }
