@@ -3,6 +3,7 @@ using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiBaiVietRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.QuyenHanRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentStatusRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -13,12 +14,17 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly ILoaiKhoaHocService _loaiKhoaHocService;
         private readonly ILoaiBaiVietService _loaiBaiVietService;
         private readonly IQuyenHanService _quyenHanService;
+        private readonly IStudentStatusService _studentStatusService;
 
-        public AdminController(ILoaiKhoaHocService loaiKhoaHocService, ILoaiBaiVietService loaiBaiVietService, IQuyenHanService quyenHananService)
+        public AdminController(ILoaiKhoaHocService loaiKhoaHocService,
+                               ILoaiBaiVietService loaiBaiVietService,
+                               IQuyenHanService quyenHananService,
+                               IStudentStatusService studentStatusService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
             _quyenHanService = quyenHananService;
+            _studentStatusService = studentStatusService;
         }
 
         [HttpPost("ThemLoaiKhoaHoc")]
@@ -76,5 +82,10 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _quyenHanService.XoaQuyenHan(quyenHanID));
         }
 
+        [HttpPost("CreateStudentStatus")]
+        public async Task<IActionResult> CreateStudentStatus([FromBody] Request_CreateStudentStatus request)
+        {
+            return Ok(await _studentStatusService.CreateStudentStatus(request));
+        }
     }
 }

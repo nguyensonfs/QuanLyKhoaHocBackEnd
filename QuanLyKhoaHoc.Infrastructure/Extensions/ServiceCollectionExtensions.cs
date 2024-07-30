@@ -32,6 +32,7 @@ namespace QuanLyKhoaHoc.Infrastructure.Extensions
             services.AddScoped<IBaseRepository<KhoaHoc>, BaseRepository<KhoaHoc>>();
             services.AddScoped<IBaseRepository<ChuDe>, BaseRepository<ChuDe>>();
             services.AddScoped<IBaseRepository<HocVien>, BaseRepository<HocVien>>();
+            services.AddScoped<IBaseRepository<TinhTrangHoc>, BaseRepository<TinhTrangHoc>>();
         }
     }
 }
