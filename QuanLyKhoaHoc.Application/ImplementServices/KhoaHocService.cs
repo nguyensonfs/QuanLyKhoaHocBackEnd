@@ -51,11 +51,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 }
                 khoaHoc.GioiThieu = request.GioiThieu;
                 khoaHoc.HinhAnh = await HandleUploadImage.Upfile(request.HinhAnh);
-                khoaHoc.HocPhi = request.HocPhi;
-                khoaHoc.LoaiKhoaHocID = request.LoaiKhoaHocID;
+                khoaHoc.HocPhi = (float)request.HocPhi;
+                khoaHoc.LoaiKhoaHocID = (int)request.LoaiKhoaHocID;
                 khoaHoc.TenKhoaHoc = request.TenKhoaHoc;
                 khoaHoc.NoiDung = request.NoiDung;
-                khoaHoc.SoLuongMon = request.SoLuongMon;
+                khoaHoc.SoLuongMon = (int)request.SoLuongMon;
 
                 khoaHoc = await _baseKhoaHocRepository.UpdateAsync(khoaHoc);
                 return new ResponseObject<DataResponseKhoaHoc>
@@ -142,11 +142,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     TenKhoaHoc = request.TenKhoaHoc,
                     HinhAnh = await HandleUploadImage.Upfile(request.HinhAnh),
                     GioiThieu = request.GioiThieu,
-                    HocPhi = request.HocPhi,
+                    HocPhi = (float)request.HocPhi,
                     NoiDung = request.NoiDung,
-                    SoLuongMon = request.SoLuongMon,
+                    SoLuongMon = (int)request.SoLuongMon,
                     SoHocVien = 0,
-                    LoaiKhoaHocID = request.LoaiKhoaHocID,
+                    LoaiKhoaHocID = (int)request.LoaiKhoaHocID,
                 };
 
                 khoaHoc = await _baseKhoaHocRepository.CreateAsync(khoaHoc);

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuanLyKhoaHoc.Domain.Entities
 {
@@ -8,7 +9,8 @@ namespace QuanLyKhoaHoc.Domain.Entities
         public int LoaiKhoaHocID { get; set; }
 
         [MaxLength(30)]
-        public string? TenLoai { get; set; }
+        [MaybeNull]
+        public string TenLoai { get; set; }
 
         public virtual ICollection<KhoaHoc>? KhoaHocs { get; set; }
     }

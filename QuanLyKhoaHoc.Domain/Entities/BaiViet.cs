@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuanLyKhoaHoc.Domain.Entities
 {
@@ -8,24 +9,34 @@ namespace QuanLyKhoaHoc.Domain.Entities
         public int BaiVietID { get; set; }
 
         [MaxLength(50)]
-        public string? TenBaiViet { get; set; }
+        [MaybeNull]
+        public string TenBaiViet { get; set; }
 
         [MaxLength(50)]
-        public string? TenTacGia { get; set; }
+        [MaybeNull]
+        public string TenTacGia { get; set; }
 
-        public string? NoiDung { get; set; }
+        [MaybeNull]
+        public string NoiDung { get; set; }
 
         [MaxLength(1000)]
-        public string? NoiDungNgan { get; set; }
+        [MaybeNull]
+        public string NoiDungNgan { get; set; }
 
-        public DateTime? ThoiGianTao { get; set; }
+        [MaybeNull]
+        public DateTime ThoiGianTao { get; set; }
 
-        public string? HinhAnh { get; set; }
+        [MaybeNull]
+        public string HinhAnh { get; set; }
 
-        public int? ChuDeID { get; set; }
+        [MaybeNull]
+        public int ChuDeID { get; set; }
+
+
         public virtual ChuDe? ChuDe { get; set; }
 
-        public int? TaiKhoanID { get; set; }
+        [MaybeNull]
+        public int TaiKhoanID { get; set; }
         public virtual TaiKhoan? TaiKhoan { get; set; }
     }
 }

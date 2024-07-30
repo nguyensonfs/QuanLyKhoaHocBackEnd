@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuanLyKhoaHoc.Domain.Entities
 {
@@ -10,17 +11,21 @@ namespace QuanLyKhoaHoc.Domain.Entities
 
         [MaxLength(50)]
         [Column(TypeName = "varchar")]
-        public string? TenNguoiDung { get; set; }
+        [MaybeNull]
+        public string TenNguoiDung { get; set; }
 
         [MaxLength(50)]
         [Column(TypeName = "varchar")]
-        public string? TenDangNhap { get; set; }
+        [MaybeNull]
+        public string TenDangNhap { get; set; }
 
         [MaxLength(50)]
         [Column(TypeName = "varchar")]
-        public string? MatKhau { get; set; }
+        [MaybeNull]
+        public string MatKhau { get; set; }
 
-        public int? QuyenHanID { get; set; }
+        [MaybeNull]
+        public int QuyenHanID { get; set; }
         public virtual QuyenHan? QuyenHan { get; set; }
 
         public virtual ICollection<DangKyHoc>? DangKyHocs { get; set; }

@@ -19,6 +19,7 @@ namespace QuanLyKhoaHoc.Infrastructure.DataContexts
         public virtual DbSet<QuyenHan> QuyenHans { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
         public virtual DbSet<TinhTrangHoc> TinhTrangHocs { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public DbSet<TEntity> SetEntity<TEntity>() where TEntity : class
         {

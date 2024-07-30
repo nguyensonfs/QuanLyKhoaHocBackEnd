@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QuanLyKhoaHoc.Domain.Entities
 {
@@ -8,33 +9,42 @@ namespace QuanLyKhoaHoc.Domain.Entities
         [Key]
         public int HocVienID { get; set; }
 
-        public string? HinhAnh { get; set; }
+        [MaybeNull]
+        public string HinhAnh { get; set; }
 
         [MaxLength(50)]
-        public string? HoTen { get; set; }
+        [MaybeNull]
+        public string HoTen { get; set; }
 
-        public DateTime? NgaySinh { get; set; }
+        [MaybeNull]
+        public DateTime NgaySinh { get; set; }
 
         [MaxLength(11)]
         [Column(TypeName = "varchar")]
-        public string? SoDienThoai { get; set; }
+        [MaybeNull]
+        public string SoDienThoai { get; set; }
 
         [MaxLength(40)]
         [Column(TypeName = "varchar")]
-        public string? Email { get; set; }
+        [MaybeNull]
+        public string Email { get; set; }
 
         [MaxLength(50)]
-        public string? TinhThanh { get; set; }
+        [MaybeNull]
+        public string TinhThanh { get; set; }
 
         [MaxLength(50)]
-        public string? QuanHuyen { get; set; }
+        [MaybeNull]
+        public string QuanHuyen { get; set; }
 
         [MaxLength(50)]
-        public string? PhuongXa { get; set; }
+        [MaybeNull]
+        public string PhuongXa { get; set; }
 
         [MaxLength(50)]
         [Column(TypeName = "varchar")]
-        public string? SoNha { get; set; }
+        [MaybeNull]
+        public string SoNha { get; set; }
 
         public virtual ICollection<DangKyHoc>? DangKyHocs { get; set; } 
     }
