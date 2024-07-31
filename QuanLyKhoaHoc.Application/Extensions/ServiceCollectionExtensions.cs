@@ -29,6 +29,9 @@ namespace QuanLyKhoaHoc.Application.Extensions
 
             services.AddScoped<StudentStatusConverter>();
             services.AddScoped<IStudentStatusService, StudentStatusService>();
+
+            services.AddScoped<AccountConverter>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }

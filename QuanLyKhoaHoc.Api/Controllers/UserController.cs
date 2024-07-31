@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.AccountRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentRequests;
@@ -16,13 +17,15 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly IKhoaHocService _khoaHocService;
         private readonly IChuDeService _chuDeService;
         private readonly IStudentService _studentService;
+        private readonly IAuthService _authService;
 
         public UserController(ILoaiKhoaHocService loaiKhoaHocService,
                               ILoaiBaiVietService loaiBaiVietService,
                               IQuyenHanService quyenHanService,
                               IKhoaHocService khoaHocService,
                               IChuDeService chuDeService,
-                              IStudentService studentService)
+                              IStudentService studentService,
+                              IAuthService authService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
@@ -30,6 +33,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
             _khoaHocService = khoaHocService;
             _chuDeService = chuDeService;
             _studentService = studentService;
+            _authService = authService;
         }
 
 
@@ -122,6 +126,12 @@ namespace QuanLyKhoaHoc.Api.Controllers
         public async Task<IActionResult> UpdateSudent([FromForm] Request_UpdateStudent request)
         {
             return Ok(await _studentService.UpdateSudent(request));
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login (Request_Login login)
+        {
+            return Ok(await _authService.Login(login));
         }
 
     }
