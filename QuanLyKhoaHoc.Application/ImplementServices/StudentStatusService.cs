@@ -3,6 +3,7 @@ using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentStatusRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiKhoaHoc;
+using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataQuyenHan;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataStudentStatus;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
@@ -57,6 +58,50 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 {
                     Status = StatusCodes.Status500InternalServerError,
                     Message = "Có lỗi: " + e.Message,
+                    Data = null,
+                };
+            }
+        }
+
+        public async Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(Request_UpdateStudentStatus request)
+        {
+            try
+            {
+                var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(request.Id);
+                if (studentStatus == null)
+                {
+                    return new ResponseObject<DataResponseStudentStatus>
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Message = "Trạng thái không tồn tại",
+                        Data = null,
+                    };
+                }
+                if (string.IsNullOrEmpty(request.StudentStatusName))
+                {
+                    return new ResponseObject<DataResponseStudentStatus>
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Message = "Vui lòng điền đầy đủ thông tin",
+                        Data = null,
+                    };
+                }
+                studentStatus.TenTinhTrang = request.StudentStatusName;
+                studentStatus = await _baseTinhTrangHocRepository.UpdateAsync(studentStatus);
+
+                return new ResponseObject<DataResponseStudentStatus>
+                {
+                    Status = StatusCodes.Status201Created,
+                    Message = "Cập nhật loại khoá học thành công",
+                    Data = _studentStatusConverter.EntityToDTO(studentStatus)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<DataResponseStudentStatus>
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Message = "Có lỗi: " + ex.Message,
                     Data = null,
                 };
             }

@@ -87,5 +87,11 @@ namespace QuanLyKhoaHoc.Api.Controllers
         {
             return Ok(await _studentStatusService.CreateStudentStatus(request));
         }
+
+        [HttpPut("UpdateStudentStatus")]
+        public async Task<IActionResult> UpdateStudentStatus([FromBody] Request_UpdateStudentStatus request)
+        {
+            return Ok(await _studentStatusService.UpdateStudentStatus(request));
+        }
     }
 }
