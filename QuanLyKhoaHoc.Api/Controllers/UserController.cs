@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.AccountRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.ArticleRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentRequests;
@@ -19,6 +20,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly IStudentService _studentService;
         private readonly IAuthService _authService;
         private readonly IStudentStatusService _studentStatusService;
+        private readonly IArticleService _articleService;
 
         public UserController(ILoaiKhoaHocService loaiKhoaHocService,
                               ILoaiBaiVietService loaiBaiVietService,
@@ -27,7 +29,8 @@ namespace QuanLyKhoaHoc.Api.Controllers
                               IChuDeService chuDeService,
                               IStudentService studentService,
                               IAuthService authService,
-                              IStudentStatusService studentStatusService)
+                              IStudentStatusService studentStatusService,
+                              IArticleService articleService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
@@ -37,6 +40,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
             _studentService = studentService;
             _authService = authService;
             _studentStatusService = studentStatusService;
+            _articleService = articleService;
         }
 
 
@@ -155,6 +159,44 @@ namespace QuanLyKhoaHoc.Api.Controllers
         public async Task<IActionResult> GetAllStatus()
         {
             return Ok(await _studentStatusService.GetAlls());
+        }
+
+        [HttpGet("GetAllArticles")]
+        public async Task<IActionResult> GetAllArticles(int pageSize = 10, int pageNumber = 1)
+        {
+            return Ok(await _articleService.GetAlls(pageSize, pageNumber));
+        }
+
+        [HttpGet("GetAllArticlebyName")]
+        public async Task<IActionResult> GetAllArticles(string keyword)
+        {
+            return Ok(await _articleService.GetArticlebyName(keyword));
+        }
+
+
+        [HttpGet("SearchPagedArticles")]
+        public async Task<IActionResult> SearchPagedArticles(string search, int page = 1, int pageSize = 10)
+        {
+            var result = await _articleService.SearchPagedArticlebyName(search, page, pageSize);
+            return Ok(result);
+        }
+
+        [HttpPost("AddArticle")]
+        public async Task<IActionResult> Create([FromForm] Request_Create request)
+        {
+            return Ok(await _articleService.AddArticle(request));
+        }
+
+        [HttpPut("UpdateArticle")]
+        public async Task<IActionResult> UpdateArticle([FromBody] Request_Update request)
+        {
+            return Ok(await _articleService.UpdateArticle(request));
+        }
+
+        [HttpDelete("DeleteArticle/{articleId}")]
+        public async Task<IActionResult> DeleteArticle([FromRoute] int articleId)
+        {
+            return Ok(await _articleService.Delete(articleId));
         }
 
         [HttpPost("login")]

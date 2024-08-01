@@ -35,6 +35,7 @@ namespace QuanLyKhoaHoc.Infrastructure.Extensions
             services.AddScoped<IBaseRepository<TinhTrangHoc>, BaseRepository<TinhTrangHoc>>();
             services.AddScoped<IBaseRepository<TaiKhoan>, BaseRepository<TaiKhoan>>();
             services.AddScoped<IBaseRepository<RefreshToken>, BaseRepository<RefreshToken>>();
+            services.AddScoped<IBaseRepository<BaiViet>, BaseRepository<BaiViet>>();
         }
     }
 }
