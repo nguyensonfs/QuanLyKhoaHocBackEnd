@@ -25,11 +25,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseKhoaHoc>> CapNhatThongTinKhoaHoc(Request_SuaKhoaHoc request)
+        public async Task<ResponseObject<DataResponseKhoaHoc>> CapNhatThongTinKhoaHoc(int couseId, Request_SuaKhoaHoc request)
         {
             try
             {
-                var khoaHoc = await _baseKhoaHocRepository.GetByIdAsync(request.KhoaHocID);
+                var khoaHoc = await _baseKhoaHocRepository.GetByIdAsync(couseId);
                 var loaiKhoaHoc = await _baseLoaiKhoaHocRepository.GetByIdAsync((int)request.LoaiKhoaHocID);
                 if (khoaHoc == null)
                 {
@@ -75,13 +75,6 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 };
             }
         }
-
-        //public async Task<IQueryable<DataResponseKhoaHoc>> GetAllKhoaHocs()
-        //{
-        //    var khoaHocs = await _baseKhoaHocRepository.GetAllAsync().Result.ToListAsync();
-        //    var dtoList = khoaHocs.Select(x => _converter.EntityToDTO(x)).AsQueryable();
-        //    return dtoList;
-        //}
 
         public async Task<PageResult<DataResponseKhoaHoc>> GetAlls(int pageSize, int pageNumber)
         {

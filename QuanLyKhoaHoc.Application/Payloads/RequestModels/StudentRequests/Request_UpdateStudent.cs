@@ -5,7 +5,7 @@ namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentRequests
 {
     public class Request_UpdateStudent
     {
-        public int HocVienId { get; set; }
+
         public IFormFile? HinhAnh { get; set; }
 
         [Required]

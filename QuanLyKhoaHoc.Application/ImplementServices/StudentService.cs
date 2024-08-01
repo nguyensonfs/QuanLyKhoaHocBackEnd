@@ -121,11 +121,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
         }
 
 
-        public async Task<ResponseObject<DataResponseStudent>> UpdateSudent(Request_UpdateStudent request)
+        public async Task<ResponseObject<DataResponseStudent>> UpdateSudent(int studentId, Request_UpdateStudent request)
         {
             try
             {
-                var student = await _baseHocVienRepository.GetByIdAsync(request.HocVienId);
+                var student = await _baseHocVienRepository.GetByIdAsync(studentId);
                 if(student == null)
                 {
                     return new ResponseObject<DataResponseStudent>

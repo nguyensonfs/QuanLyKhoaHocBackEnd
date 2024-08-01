@@ -122,12 +122,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return new PageResult<DataResponseUser>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
         }
 
-        public async Task<ResponseObject<DataResponseUser>> UpdateAccount(Request_UpdateAccount request)
+        public async Task<ResponseObject<DataResponseUser>> UpdateAccount(int accountId, Request_UpdateAccount request)
         {
             try
             {
 
-                var account = await _baseTaiKhoanRepository.GetByIdAsync(request.TaiKhoanID);
+                var account = await _baseTaiKhoanRepository.GetByIdAsync(accountId);
                 if (account == null)
                 {
                     return new ResponseObject<DataResponseUser>

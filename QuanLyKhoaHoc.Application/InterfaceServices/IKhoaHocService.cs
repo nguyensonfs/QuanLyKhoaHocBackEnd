@@ -8,11 +8,10 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
     public interface IKhoaHocService
     {
         Task<ResponseObject<DataResponseKhoaHoc>> ThemKhoaHoc(Request_ThemKhoaHoc request);
-        Task<ResponseObject<DataResponseKhoaHoc>> CapNhatThongTinKhoaHoc(Request_SuaKhoaHoc request);
+        Task<ResponseObject<DataResponseKhoaHoc>> CapNhatThongTinKhoaHoc(int couseId,Request_SuaKhoaHoc request);
         Task<PageResult<DataResponseKhoaHoc>> GetAlls(int pageSize, int pageNumber);
         Task<ResponseObject<DataResponseKhoaHoc>> GetKhoaHocByName(string tenKhoaHoc);
         Task<PageResult<DataResponseKhoaHoc>> SearchPagedKhoaHocsByName(string tenKhoaHoc, int pageNumber, int pageSize);
         Task<string> XoaKhoaHoc(int khoaHocID);
-        //Task<IQueryable<DataResponseKhoaHoc>> GetAllKhoaHocs();
     }
 }

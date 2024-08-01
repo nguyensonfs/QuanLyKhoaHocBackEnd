@@ -4,7 +4,6 @@ namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.ArticleRequests
 {
     public class Request_Update
     {
-        public int BaiVietID { get; set; }
 
         public string TenBaiViet { get; set; }
 

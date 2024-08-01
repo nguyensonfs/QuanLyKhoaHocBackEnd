@@ -137,11 +137,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return new PageResult<DataResponseArticle>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
         }
 
-        public async Task<ResponseObject<DataResponseArticle>> UpdateArticle(Request_Update request)
+        public async Task<ResponseObject<DataResponseArticle>> UpdateArticle(int articleId, Request_Update request)
         {
             try
             {
-                var article = await _baseBaiVietRepository.GetByIdAsync(request.BaiVietID);
+                var article = await _baseBaiVietRepository.GetByIdAsync(articleId);
                 if (article == null)
                 {
                     return new ResponseObject<DataResponseArticle>

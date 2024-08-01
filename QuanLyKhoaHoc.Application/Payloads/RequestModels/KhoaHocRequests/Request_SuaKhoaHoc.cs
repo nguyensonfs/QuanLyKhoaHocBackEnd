@@ -4,7 +4,6 @@ namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests
 {
     public class Request_SuaKhoaHoc
     {
-        public int KhoaHocID { get; set; }
 
         public string TenKhoaHoc { get; set; }
 
