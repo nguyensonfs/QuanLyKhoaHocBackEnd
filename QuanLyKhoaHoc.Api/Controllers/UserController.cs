@@ -18,6 +18,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly IChuDeService _chuDeService;
         private readonly IStudentService _studentService;
         private readonly IAuthService _authService;
+        private readonly IStudentStatusService _studentStatusService;
 
         public UserController(ILoaiKhoaHocService loaiKhoaHocService,
                               ILoaiBaiVietService loaiBaiVietService,
@@ -25,7 +26,8 @@ namespace QuanLyKhoaHoc.Api.Controllers
                               IKhoaHocService khoaHocService,
                               IChuDeService chuDeService,
                               IStudentService studentService,
-                              IAuthService authService)
+                              IAuthService authService,
+                              IStudentStatusService studentStatusService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
@@ -34,6 +36,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
             _chuDeService = chuDeService;
             _studentService = studentService;
             _authService = authService;
+            _studentStatusService = studentStatusService;
         }
 
 
@@ -147,8 +150,15 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _studentService.DeleteStudent(studentId));
         }
 
+
+        [HttpGet("GetAllStatus")]
+        public async Task<IActionResult> GetAllStatus()
+        {
+            return Ok(await _studentStatusService.GetAlls());
+        }
+
         [HttpPost("login")]
-        public async Task<IActionResult> Login (Request_Login login)
+        public async Task<IActionResult> Login(Request_Login login)
         {
             return Ok(await _authService.Login(login));
         }

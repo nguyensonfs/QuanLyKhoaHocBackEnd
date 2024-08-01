@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentStatusRequests;
@@ -74,9 +75,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return "Xoá thành công";
         }
 
-        public Task<IQueryable<DataResponseStudentStatus>> GetAlls()
+        public async Task<IQueryable<DataResponseStudentStatus>> GetAlls()
         {
-            throw new NotImplementedException();
+            var query = await _baseTinhTrangHocRepository.GetAllAsync().Result.ToListAsync();
+            var dtoList = query.Select(x => _studentStatusConverter.EntityToDTO(x)).AsQueryable();
+            return dtoList;
         }
 
         public async Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(Request_UpdateStudentStatus request)
