@@ -93,5 +93,11 @@ namespace QuanLyKhoaHoc.Api.Controllers
         {
             return Ok(await _studentStatusService.UpdateStudentStatus(request));
         }
+
+        [HttpDelete("DeleteStatus/{statusId}")]
+        public async Task<IActionResult> DeleteStatus(int statusId)
+        {
+            return Ok(await _studentStatusService.Delete(statusId));
+        }
     }
 }
