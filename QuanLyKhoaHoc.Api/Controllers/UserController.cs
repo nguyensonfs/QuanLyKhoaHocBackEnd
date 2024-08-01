@@ -116,6 +116,19 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _chuDeService.UpdateChuDe(request));
         }
 
+        [HttpGet("GetAllStudents")]
+        public async Task<IActionResult> GetAllStudents(int pageSize = 10, int pageNumber = 1)
+        {
+            return Ok(await _studentService.GetAlls(pageSize, pageNumber));
+        }
+
+        [HttpGet("SearchPagedStudents")]
+        public async Task<IActionResult> Search(string search, int page = 1, int pageSize = 10)
+        {
+            var result = await _studentService.SearchPagedStudents(search, page, pageSize);
+            return Ok(result);
+        }
+
         [HttpPost("AddStudent")]
         public async Task<IActionResult> AddStudent([FromForm] Request_AddStudent request)
         {

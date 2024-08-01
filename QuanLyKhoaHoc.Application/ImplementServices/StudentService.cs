@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.Handle.HandleImage;
+using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentRequests;
+using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataKhoaHoc;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataStudent;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
 using QuanLyKhoaHoc.Domain.InterfaceRepositories;
+using System;
 using static QuanLyKhoaHoc.Domain.Validations.ValidateInput;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
@@ -89,6 +93,33 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             await _baseHocVienRepository.DeleteAsync(studentId);
             return "Xoá thành công";
         }
+
+        public async Task<PageResult<DataResponseStudent>> GetAlls(int pageSize, int pageNumber)
+        {
+            var students = await _baseHocVienRepository.GetAllAsync().Result.ToListAsync();
+            var query = students.Select(x => _studentConverter.EntityToDTO(x)).AsQueryable();
+            var result = Pagination.GetPagedData(query, pageSize, pageNumber);
+            return result;
+        }
+
+        public async Task<PageResult<DataResponseStudent>> SearchPagedStudents(string keyword, int pageNumber, int pageSize)
+        {
+            
+            var query = await _baseHocVienRepository.GetAllAsync(hv =>
+                hv.HoTen.ToLower().Contains(keyword.ToLower()) ||
+                hv.Email.ToLower().Contains(keyword.ToLower())
+            );
+
+           
+            var pagedData = Pagination.GetPagedData(query, pageSize, pageNumber);
+
+            
+            var convertedItems = pagedData.Data.Select(hocVien => _studentConverter.EntityToDTO(hocVien)).AsQueryable();
+
+            
+            return new PageResult<DataResponseStudent>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
+        }
+
 
         public async Task<ResponseObject<DataResponseStudent>> UpdateSudent(Request_UpdateStudent request)
         {
