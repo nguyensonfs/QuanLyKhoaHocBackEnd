@@ -8,5 +8,7 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
     {
         Task<ResponseObject<DataResponseStudentStatus>> CreateStudentStatus(Request_CreateStudentStatus request);
         Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(Request_UpdateStudentStatus request);
+        Task<IQueryable<DataResponseStudentStatus>> GetAlls();
+        Task<string> Delete(int statusId);
     }
 }
