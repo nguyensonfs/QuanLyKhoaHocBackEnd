@@ -8,5 +8,6 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
     {
         Task<ResponseObject<DataResponseStudent>> CreateSudent(Request_AddStudent request);
         Task<ResponseObject<DataResponseStudent>> UpdateSudent(Request_UpdateStudent request);
+        Task<string> DeleteStudent(int studentId);
     }
 }

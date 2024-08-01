@@ -128,6 +128,12 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _studentService.UpdateSudent(request));
         }
 
+        [HttpDelete("DeleteStudent/{studentId}")]
+        public async Task<IActionResult> DeleteStudent([FromRoute] int studentId)
+        {
+            return Ok(await _studentService.DeleteStudent(studentId));
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login (Request_Login login)
         {

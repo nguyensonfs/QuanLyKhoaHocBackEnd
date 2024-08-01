@@ -79,6 +79,17 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
+        public async Task<string> DeleteStudent(int studentId)
+        {
+            var student = await _baseHocVienRepository.GetByIdAsync(studentId);
+            if (student == null)
+            {
+                return "Học viên không tồn tại";
+            }
+            await _baseHocVienRepository.DeleteAsync(studentId);
+            return "Xoá thành công";
+        }
+
         public async Task<ResponseObject<DataResponseStudent>> UpdateSudent(Request_UpdateStudent request)
         {
             try
