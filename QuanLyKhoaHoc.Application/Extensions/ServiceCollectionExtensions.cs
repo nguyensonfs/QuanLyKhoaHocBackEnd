@@ -32,6 +32,7 @@ namespace QuanLyKhoaHoc.Application.Extensions
 
             services.AddScoped<AccountConverter>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddScoped<ArticleConverter>();
             services.AddScoped<IArticleService, ArticleService>();

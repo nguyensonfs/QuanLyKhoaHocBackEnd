@@ -10,7 +10,10 @@ namespace QuanLyKhoaHoc.Application.Payloads.Mappers
             return new DataResponseUser
             {
                 TaiKhoanID = taiKhoan.TaiKhoanID,
-                TenNguoiDung = taiKhoan.TenNguoiDung
+                TenNguoiDung = taiKhoan.TenNguoiDung,
+                MatKhau = taiKhoan.MatKhau,
+                QuyenHanID = taiKhoan.QuyenHanID,
+                TenDangNhap = taiKhoan.TenDangNhap
             };
         }
     }

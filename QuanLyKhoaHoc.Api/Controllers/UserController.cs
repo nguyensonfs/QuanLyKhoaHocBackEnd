@@ -21,6 +21,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
         private readonly IAuthService _authService;
         private readonly IStudentStatusService _studentStatusService;
         private readonly IArticleService _articleService;
+        private readonly IAccountService _accountService;
 
         public UserController(ILoaiKhoaHocService loaiKhoaHocService,
                               ILoaiBaiVietService loaiBaiVietService,
@@ -30,7 +31,8 @@ namespace QuanLyKhoaHoc.Api.Controllers
                               IStudentService studentService,
                               IAuthService authService,
                               IStudentStatusService studentStatusService,
-                              IArticleService articleService)
+                              IArticleService articleService,
+                              IAccountService accountService)
         {
             _loaiKhoaHocService = loaiKhoaHocService;
             _loaiBaiVietService = loaiBaiVietService;
@@ -41,6 +43,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
             _authService = authService;
             _studentStatusService = studentStatusService;
             _articleService = articleService;
+            _accountService = accountService;
         }
 
 
@@ -198,6 +201,46 @@ namespace QuanLyKhoaHoc.Api.Controllers
         {
             return Ok(await _articleService.Delete(articleId));
         }
+
+        #region Account
+        [HttpGet("GetAllAccounts")]
+        public async Task<IActionResult> GetAllAccounts(int pageSize = 10, int pageNumber = 1)
+        {
+            return Ok(await _accountService.GetAlls(pageSize, pageNumber));
+        }
+
+        [HttpGet("GetAllAccountsByName")]
+        public async Task<IActionResult> GetAllAccountsByName(string keyword)
+        {
+            return Ok(await _accountService.GetAccountbyName(keyword));
+        }
+
+
+        [HttpGet("SearchPagedAccounts")]
+        public async Task<IActionResult> SearchPagedAccounts(string search, int page = 1, int pageSize = 10)
+        {
+            var result = await _accountService.SearchPagedAccountbyName(search, page, pageSize);
+            return Ok(result);
+        }
+
+        [HttpPost("AddAccount")]
+        public async Task<IActionResult> AddAccount([FromForm] Request_CreateAccount request)
+        {
+            return Ok(await _accountService.AddAccount(request));
+        }
+
+        [HttpPut("UpdateAccount")]
+        public async Task<IActionResult> UpdateAccount([FromBody] Request_UpdateAccount request)
+        {
+            return Ok(await _accountService.UpdateAccount(request));
+        }
+
+        [HttpDelete("DeleteAccount/{accountId}")]
+        public async Task<IActionResult> DeleteAccount([FromRoute] int accountId)
+        {
+            return Ok(await _accountService.Delete(accountId));
+        }
+        #endregion
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(Request_Login login)
