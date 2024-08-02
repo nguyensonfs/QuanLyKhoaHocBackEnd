@@ -21,11 +21,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseLoaiBaiViet>> CapNhatThongTinLoaiBaiViet(Request_SuaLoaiBaiViet request)
+        public async Task<ResponseObject<DataResponseLoaiBaiViet>> CapNhatThongTinLoaiBaiViet(int typeofArticleId, Request_SuaLoaiBaiViet request)
         {
             try
             {
-                var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(request.LoaiBaiVietID);
+                var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(typeofArticleId);
                 if (loaiBaiViet == null)
                 {
                     return new ResponseObject<DataResponseLoaiBaiViet>

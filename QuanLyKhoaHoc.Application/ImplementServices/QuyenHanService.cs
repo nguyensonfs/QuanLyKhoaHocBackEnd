@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
@@ -23,11 +21,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseQuyenHan>> CapNhatThongTinQuyenHan(Request_SuaQuyenHan request)
+        public async Task<ResponseObject<DataResponseQuyenHan>> CapNhatThongTinQuyenHan(int roleId, Request_SuaQuyenHan request)
         {
             try
             {
-                var quyenHan = await _baseQuyenHanRepository.GetByIdAsync(request.QuyenHanID);
+                var quyenHan = await _baseQuyenHanRepository.GetByIdAsync(roleId);
                 if (quyenHan == null)
                 {
                     return new ResponseObject<DataResponseQuyenHan>

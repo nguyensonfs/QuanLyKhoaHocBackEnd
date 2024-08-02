@@ -22,7 +22,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _khoaHocService.GetAlls(pageSize, pageNumber));
         }
 
-        [HttpGet("{courseName}")]
+        [HttpGet("byname/{courseName}")]
         public async Task<IActionResult> GetKhoaHocByName( string courseName)
         {
             return Ok(await _khoaHocService.GetKhoaHocByName(courseName));

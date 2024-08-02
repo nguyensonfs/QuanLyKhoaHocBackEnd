@@ -7,7 +7,7 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
     public interface IStudentStatusService
     {
         Task<ResponseObject<DataResponseStudentStatus>> CreateStudentStatus(Request_CreateStudentStatus request);
-        Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(Request_UpdateStudentStatus request);
+        Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(int studentStatusId,Request_UpdateStudentStatus request);
         Task<IQueryable<DataResponseStudentStatus>> GetAlls();
         Task<string> Delete(int statusId);
     }

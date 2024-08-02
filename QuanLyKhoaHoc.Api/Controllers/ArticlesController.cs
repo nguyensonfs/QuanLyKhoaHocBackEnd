@@ -21,7 +21,7 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _articleService.GetAlls(pageSize, pageNumber));
         }
 
-        [HttpGet("{articleName}")]
+        [HttpGet("byname/{articleName}")]
         public async Task<IActionResult> GetAllArticles(string articleName)
         {
             return Ok(await _articleService.GetArticlebyName(articleName));

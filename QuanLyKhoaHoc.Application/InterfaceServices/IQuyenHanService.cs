@@ -7,7 +7,7 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
     public interface IQuyenHanService
     {
         Task<ResponseObject<DataResponseQuyenHan>> ThemQuyenHan(Request_ThemQuyenHan request);
-        Task<ResponseObject<DataResponseQuyenHan>> CapNhatThongTinQuyenHan(Request_SuaQuyenHan request);
+        Task<ResponseObject<DataResponseQuyenHan>> CapNhatThongTinQuyenHan(int roleId,Request_SuaQuyenHan request);
         Task<string> XoaQuyenHan(int quyenHanId);
         Task<IQueryable<DataResponseQuyenHan>> GetAllQuyenHans();
     }

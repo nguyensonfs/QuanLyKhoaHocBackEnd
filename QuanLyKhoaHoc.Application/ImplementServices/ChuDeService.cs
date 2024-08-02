@@ -96,11 +96,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             };
         }
 
-        public async Task<ResponseObject<DataResponseChuDe>> UpdateChuDe(Request_EditChuDe request)
+        public async Task<ResponseObject<DataResponseChuDe>> UpdateChuDe(int topicId, Request_EditChuDe request)
         {
             try
             {
-                var chuDe = await _baseChuDeRepository.GetByIdAsync(request.ChuDeID);
+                var chuDe = await _baseChuDeRepository.GetByIdAsync(topicId);
                 if (chuDe == null)
                 {
                     return new ResponseObject<DataResponseChuDe>

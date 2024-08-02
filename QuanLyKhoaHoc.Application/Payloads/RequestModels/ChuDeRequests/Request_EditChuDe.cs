@@ -4,7 +4,6 @@ namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests
 {
     public class Request_EditChuDe
     {
-        public int ChuDeID { get; set; }
 
         [Required]
         public string TenChuDe { get; set; } = string.Empty;

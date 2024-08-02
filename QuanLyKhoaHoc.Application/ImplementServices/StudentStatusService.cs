@@ -82,11 +82,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return dtoList;
         }
 
-        public async Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(Request_UpdateStudentStatus request)
+        public async Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(int studentStatusId, Request_UpdateStudentStatus request)
         {
             try
             {
-                var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(request.Id);
+                var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(studentStatusId);
                 if (studentStatus == null)
                 {
                     return new ResponseObject<DataResponseStudentStatus>

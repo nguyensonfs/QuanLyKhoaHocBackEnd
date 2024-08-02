@@ -21,13 +21,15 @@ namespace QuanLyKhoaHoc.Api.Controllers
             return Ok(await _accountService.GetAlls(pageSize, pageNumber));
         }
 
-        [HttpGet("{accountName}")]
-        public async Task<IActionResult> GetAllAccountsByName(string accountName)
+        // GET: api/accounts/byname/{accountName}
+        [HttpGet("byname/{accountName}")]
+        public async Task<IActionResult> GetAllAccountByName(string accountName)
         {
             return Ok(await _accountService.GetAccountbyName(accountName));
         }
 
 
+        // GET: api/accounts/search
         [HttpGet("search")]
         public async Task<IActionResult> SearchPagedAccounts(string search, int page = 1, int pageSize = 10)
         {

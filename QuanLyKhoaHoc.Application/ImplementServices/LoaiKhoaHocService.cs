@@ -22,11 +22,11 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> CapNhatThongTinLoaiKhoaHoc(Request_SuaLoaiKhoaHoc request)
+        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> CapNhatThongTinLoaiKhoaHoc(int courseId, Request_SuaLoaiKhoaHoc request)
         {
             try
             {
-                var loaiKhoaHoc = await _baseLoaiKhoaHocRepository.GetByIdAsync(request.LoaiKhoaHocID);
+                var loaiKhoaHoc = await _baseLoaiKhoaHocRepository.GetByIdAsync(courseId);
                 if (loaiKhoaHoc == null)
                 {
                     return new ResponseObject<DataResponseLoaiKhoaHoc>
