@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfCourseRequests;
@@ -23,11 +24,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _typeOfCourseConverter = typeOfCourseConverter;
         }
 
-        public async Task<IQueryable<DataResponseTypeOfCourse>> GetAllTypeOfCourses()
+        public async Task<PageResult<DataResponseTypeOfCourse>> GetAllTypeOfCourses(int pageSize, int pageNumber)
         {
             var loaiKhoaHocs = await _baseTypeOfCourseRepository.GetAllAsync().Result.ToListAsync();
             var dtoList = loaiKhoaHocs.Select(x => _typeOfCourseConverter.EntityToDTO(x)).AsQueryable();
-            return dtoList;
+            var result = Pagination.GetPagedData(dtoList, pageSize, pageNumber);
+            return result;
         }
         public async Task<ResponseObject<DataResponseTypeOfCourse>> CreateTypeOfCourse(Request_CreateTypeOfCourse request)
         {
