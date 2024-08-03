@@ -16,9 +16,9 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int pageSize = 10, int pageNumber = 1)
         {
-            return Ok(await _typeOfArticleService.GetAllTypeOfArticles());
+            return Ok(await _typeOfArticleService.GetAllTypeOfArticles(pageSize, pageNumber));
         }
 
         [HttpPost]

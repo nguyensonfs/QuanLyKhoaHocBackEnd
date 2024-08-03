@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfArticleRequests;
@@ -21,11 +22,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _baseTypeOfArticleRepository = baseTypeOfArticleRepository;
             _typeOfArticleConverter = typeOfArticleConverter;
         }
-        public async Task<IQueryable<DataResponseTypeOfArticle>> GetAllTypeOfArticles()
+        public async Task<PageResult<DataResponseTypeOfArticle>> GetAllTypeOfArticles(int pageSize, int pageNumber)
         {
-            var loaiBaiViets = await _baseTypeOfArticleRepository.GetAllAsync().Result.ToListAsync();
-            var dtoList = loaiBaiViets.Select(x => _typeOfArticleConverter.EntityToDTO(x)).AsQueryable();
-            return dtoList;
+            var typeOfArticles = await _baseTypeOfArticleRepository.GetAllAsync().Result.ToListAsync();
+            var query = typeOfArticles.Select(x => _typeOfArticleConverter.EntityToDTO(x)).AsQueryable();
+            var result = Pagination.GetPagedData(query, pageSize, pageNumber);
+            return result;
         }
         public async Task<ResponseObject<DataResponseTypeOfArticle>> CreateTypeOfArticle(Request_CreateTypeOfArticle request)
         {
