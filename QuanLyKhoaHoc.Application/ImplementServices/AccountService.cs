@@ -14,87 +14,39 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
     public class AccountService : IAccountService
     {
 
-        private readonly IBaseRepository<TaiKhoan> _baseTaiKhoanRepository;
-        private readonly IBaseRepository<QuyenHan> _baseQuyenHanRepository;
-        private readonly AccountConverter _converter;
+        private readonly IBaseRepository<TaiKhoan> _baseAccountRepository;
+        private readonly IBaseRepository<QuyenHan> _baseRoleRepository;
+        private readonly AccountConverter _accountConverter;
 
-        public AccountService(AccountConverter converter,
-                              IBaseRepository<TaiKhoan> baseTaiKhoanRepository,
-                              IBaseRepository<QuyenHan> baseQuyenHanRepository)
+        public AccountService(AccountConverter accountConverter,
+                              IBaseRepository<TaiKhoan> baseAccountRepository,
+                              IBaseRepository<QuyenHan> baseRoleRepository)
         {
 
 
-            _baseTaiKhoanRepository = baseTaiKhoanRepository;
-            _baseQuyenHanRepository = baseQuyenHanRepository;
-            _converter = converter;
-        }
-
-        public async Task<ResponseObject<DataResponseUser>> CreateAccount(Request_CreateAccount request)
-        {
-            try
-            {
-                var role = await _baseQuyenHanRepository.GetByIdAsync(request.QuyenHanID);
-                if (role == null)
-                {
-                    return new ResponseObject<DataResponseUser>
-                    {
-                        Status = StatusCodes.Status404NotFound,
-                        Message = "Không tìm thấy role",
-                        Data = null
-                    };
-                }
-
-                var acc = new TaiKhoan
-                {
-                    TenDangNhap = request.TenDangNhap,
-                    TenNguoiDung = request.TenNguoiDung,
-                    MatKhau = request.MatKhau,
-                    QuyenHanID = request.QuyenHanID,
-                };
-
-                acc = await _baseTaiKhoanRepository.CreateAsync(acc);
-
-                return new ResponseObject<DataResponseUser>
-                {
-                    Status = StatusCodes.Status201Created,
-                    Message = "Tạo tài khoản thành công",
-                    Data = _converter.EntityToDTO(acc)
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseObject<DataResponseUser>
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Message = "Có lỗi: " + ex.Message,
-                    Data = null
-                };
-            }
-
-        }
-
-        public async Task<string> DeleteAccount(int accountId)
-        {
-            var acc = await _baseTaiKhoanRepository.GetByIdAsync(accountId);
-            if (acc == null)
-            {
-                return "không tìm thấy tài khoản đó";
-            }
-            await _baseTaiKhoanRepository.DeleteAsync(accountId);
-            return "Xoá thành công";
+            _baseAccountRepository = baseAccountRepository;
+            _baseRoleRepository = baseRoleRepository;
+            _accountConverter = accountConverter;
         }
 
         public async Task<PageResult<DataResponseUser>> GetAlls(int pageSize, int pageNumber)
         {
-            var accs = await _baseTaiKhoanRepository.GetAllAsync().Result.ToListAsync();
-            var query = accs.Select(x => _converter.EntityToDTO(x)).AsQueryable();
+            var accs = await _baseAccountRepository.GetAllAsync().Result.ToListAsync();
+            var query = accs.Select(x => _accountConverter.EntityToDTO(x)).AsQueryable();
             var result = Pagination.GetPagedData(query, pageSize, pageNumber);
             return result;
         }
+        public async Task<PageResult<DataResponseUser>> SearchPagedAccountbyName(string keyword, int pageNumber, int pageSize)
+        {
+            var query = await _baseAccountRepository.GetAllAsync(bv => bv.TenNguoiDung.ToLower().Contains(keyword.ToLower()));
+            var pagedData = Pagination.GetPagedData(query, pageSize, pageNumber);
+            var convertedItems = pagedData.Data.Select(x => _accountConverter.EntityToDTO(x)).AsQueryable();
 
+            return new PageResult<DataResponseUser>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
+        }
         public async Task<ResponseObject<DataResponseUser>> GetAccountbyName(string keyword)
         {
-            var acc = await _baseTaiKhoanRepository.GetAsync(x => x.TenNguoiDung.ToLower().Contains(keyword.ToLower()));
+            var acc = await _baseAccountRepository.GetAsync(x => x.TenNguoiDung.ToLower().Contains(keyword.ToLower()));
             if (acc == null)
             {
                 return new ResponseObject<DataResponseUser>
@@ -109,25 +61,58 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             {
                 Status = StatusCodes.Status200OK,
                 Message = "Đã tìm thấy tài khoản",
-                Data = _converter.EntityToDTO(acc)
+                Data = _accountConverter.EntityToDTO(acc)
             };
         }
-
-        public async Task<PageResult<DataResponseUser>> SearchPagedAccountbyName(string keyword, int pageNumber, int pageSize)
+        public async Task<ResponseObject<DataResponseUser>> CreateAccount(Request_CreateAccount request)
         {
-            var query = await _baseTaiKhoanRepository.GetAllAsync(bv => bv.TenNguoiDung.ToLower().Contains(keyword.ToLower()));
-            var pagedData = Pagination.GetPagedData(query, pageSize, pageNumber);
-            var convertedItems = pagedData.Data.Select(x => _converter.EntityToDTO(x)).AsQueryable();
+            try
+            {
+                var role = await _baseRoleRepository.GetByIdAsync(request.QuyenHanID);
+                if (role == null)
+                {
+                    return new ResponseObject<DataResponseUser>
+                    {
+                        Status = StatusCodes.Status404NotFound,
+                        Message = "Không tìm thấy quyền",
+                        Data = null
+                    };
+                }
 
-            return new PageResult<DataResponseUser>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
+                var acc = new TaiKhoan
+                {
+                    TenDangNhap = request.TenDangNhap,
+                    TenNguoiDung = request.TenNguoiDung,
+                    MatKhau = request.MatKhau,
+                    QuyenHanID = request.QuyenHanID,
+                };
+
+                acc = await _baseAccountRepository.CreateAsync(acc);
+
+                return new ResponseObject<DataResponseUser>
+                {
+                    Status = StatusCodes.Status201Created,
+                    Message = "Tạo tài khoản thành công",
+                    Data = _accountConverter.EntityToDTO(acc)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<DataResponseUser>
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Message = "Có lỗi: " + ex.Message,
+                    Data = null
+                };
+            }
+
         }
-
         public async Task<ResponseObject<DataResponseUser>> UpdateAccount(int accountId, Request_UpdateAccount request)
         {
             try
             {
 
-                var account = await _baseTaiKhoanRepository.GetByIdAsync(accountId);
+                var account = await _baseAccountRepository.GetByIdAsync(accountId);
                 if (account == null)
                 {
                     return new ResponseObject<DataResponseUser>
@@ -137,7 +122,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                         Data = null
                     };
                 }
-                var role = await _baseQuyenHanRepository.GetByIdAsync(request.QuyenHanID);
+                var role = await _baseRoleRepository.GetByIdAsync(request.QuyenHanID);
                 if (role == null)
                 {
                     return new ResponseObject<DataResponseUser>
@@ -153,12 +138,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 account.QuyenHanID = request.QuyenHanID;
 
 
-                account = await _baseTaiKhoanRepository.UpdateAsync(account);
+                account = await _baseAccountRepository.UpdateAsync(account);
                 return new ResponseObject<DataResponseUser>
                 {
                     Status = StatusCodes.Status201Created,
                     Message = "Cập nhật tài khoản thành công",
-                    Data = _converter.EntityToDTO(account)
+                    Data = _accountConverter.EntityToDTO(account)
                 };
             }
             catch (Exception ex)
@@ -172,6 +157,15 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
 
         }
-
+        public async Task<string> DeleteAccount(int accountId)
+        {
+            var acc = await _baseAccountRepository.GetByIdAsync(accountId);
+            if (acc == null)
+            {
+                return "không tìm thấy tài khoản đó";
+            }
+            await _baseAccountRepository.DeleteAsync(accountId);
+            return "Xoá thành công";
+        }
     }
 }

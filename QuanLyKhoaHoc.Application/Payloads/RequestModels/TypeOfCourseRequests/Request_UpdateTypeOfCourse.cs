@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests
+namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfCourseRequests
 {
     public class Request_UpdateTypeOfCourse
     {

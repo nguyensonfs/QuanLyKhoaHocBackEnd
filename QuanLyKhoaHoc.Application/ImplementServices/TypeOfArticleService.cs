@@ -13,9 +13,9 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
     public class TypeOfArticleService : ITypeOfArticleService
     {
         private readonly IBaseRepository<LoaiBaiViet> _baseLoaiBaiVietRepository;
-        private readonly LoaiBaiVietConverter _converter;
+        private readonly TypeOfArticleConverter _converter;
 
-        public TypeOfArticleService(IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository, LoaiBaiVietConverter converter)
+        public TypeOfArticleService(IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository, TypeOfArticleConverter converter)
         {
             _baseLoaiBaiVietRepository = baseLoaiBaiVietRepository;
             _converter = converter;

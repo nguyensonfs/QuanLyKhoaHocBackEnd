@@ -16,9 +16,9 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
     {
         private readonly IBaseRepository<KhoaHoc> _baseKhoaHocRepository;
         private readonly IBaseRepository<LoaiKhoaHoc> _baseLoaiKhoaHocRepository;
-        private readonly KhoaHocConverter _converter;
+        private readonly CourseConverter _converter;
 
-        public CourseService(IBaseRepository<KhoaHoc> baseKhoaHocRepository, KhoaHocConverter converter, IBaseRepository<LoaiKhoaHoc> baseLoaiKhoaHocRepository)
+        public CourseService(IBaseRepository<KhoaHoc> baseKhoaHocRepository, CourseConverter converter, IBaseRepository<LoaiKhoaHoc> baseLoaiKhoaHocRepository)
         {
             _baseKhoaHocRepository = baseKhoaHocRepository;
             _baseLoaiKhoaHocRepository = baseLoaiKhoaHocRepository;

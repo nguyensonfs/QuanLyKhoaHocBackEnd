@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfCourseRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {

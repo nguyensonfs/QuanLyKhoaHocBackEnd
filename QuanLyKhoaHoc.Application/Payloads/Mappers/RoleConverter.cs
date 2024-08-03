@@ -3,9 +3,9 @@ using QuanLyKhoaHoc.Domain.Entities;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
-    public class QuyenHanConverter
+    public class RoleConverter
     {
-        public QuyenHanConverter() { }
+        public RoleConverter() { }
         public DataResponseQuyenHan EntityToDTO(QuyenHan quyenHan)
         {
             return new DataResponseQuyenHan

@@ -13,9 +13,9 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
     public class RoleService : IRoleService
     {
         private readonly IBaseRepository<QuyenHan> _baseQuyenHanRepository;
-        private readonly QuyenHanConverter _converter;
+        private readonly RoleConverter _converter;
 
-        public RoleService(IBaseRepository<QuyenHan> baseQuyenHanRepository, QuyenHanConverter converter)
+        public RoleService(IBaseRepository<QuyenHan> baseQuyenHanRepository, RoleConverter converter)
         {
             _baseQuyenHanRepository = baseQuyenHanRepository;
             _converter = converter;

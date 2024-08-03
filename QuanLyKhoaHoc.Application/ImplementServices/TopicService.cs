@@ -14,10 +14,10 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
     public class TopicService : ITopicService
     {
         private readonly IBaseRepository<ChuDe> _baseChuDeRepository;
-        private readonly ChuDeConverter _chuDeConverter;
+        private readonly TopicConverter _chuDeConverter;
         private readonly IBaseRepository<LoaiBaiViet> _baseLoaiBaiVietRepository;
 
-        public TopicService(IBaseRepository<ChuDe> baseChuDeRepository, ChuDeConverter chuDeConverter, IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository)
+        public TopicService(IBaseRepository<ChuDe> baseChuDeRepository, TopicConverter chuDeConverter, IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository)
         {
             _baseChuDeRepository = baseChuDeRepository;
             _chuDeConverter = chuDeConverter;

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfCourseRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiKhoaHoc;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
@@ -11,12 +11,12 @@ using QuanLyKhoaHoc.Domain.InterfaceRepositories;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class LoaiKhoaHocService : ITypeOfCourseService
+    public class TypeOfCourseService : ITypeOfCourseService
     {
         private readonly IBaseRepository<LoaiKhoaHoc> _baseLoaiKhoaHocRepository;
-        private readonly LoaiKhoaHocConverter _converter;
+        private readonly TypeOfCourseConverter _converter;
 
-        public LoaiKhoaHocService(IBaseRepository<LoaiKhoaHoc> baseLoaiKhoaHocRepository, LoaiKhoaHocConverter converter)
+        public TypeOfCourseService(IBaseRepository<LoaiKhoaHoc> baseLoaiKhoaHocRepository, TypeOfCourseConverter converter)
         {
             _baseLoaiKhoaHocRepository = baseLoaiKhoaHocRepository;
             _converter = converter;

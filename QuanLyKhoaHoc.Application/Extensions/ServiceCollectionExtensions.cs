@@ -9,19 +9,19 @@ namespace QuanLyKhoaHoc.Application.Extensions
     {
         public static void AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<LoaiKhoaHocConverter>();
-            services.AddScoped<ITypeOfCourseService, LoaiKhoaHocService>();
+            services.AddScoped<TypeOfCourseConverter>();
+            services.AddScoped<ITypeOfCourseService, TypeOfCourseService>();
 
-            services.AddScoped<LoaiBaiVietConverter>();
+            services.AddScoped<TypeOfArticleConverter>();
             services.AddScoped<ITypeOfArticleService, TypeOfArticleService>();
 
-            services.AddScoped<QuyenHanConverter>();
+            services.AddScoped<RoleConverter>();
             services.AddScoped<IRoleService, RoleService>();
 
-            services.AddScoped<KhoaHocConverter>();
+            services.AddScoped<CourseConverter>();
             services.AddScoped<ICourseService, CourseService>();
 
-            services.AddScoped<ChuDeConverter>();
+            services.AddScoped<TopicConverter>();
             services.AddScoped<ITopicService, TopicService>();
 
             services.AddScoped<StudentConverter>();

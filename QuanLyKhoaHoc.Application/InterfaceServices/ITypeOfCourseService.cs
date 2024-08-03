@@ -1,4 +1,4 @@
-﻿using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests;
+﻿using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfCourseRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiKhoaHoc;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 

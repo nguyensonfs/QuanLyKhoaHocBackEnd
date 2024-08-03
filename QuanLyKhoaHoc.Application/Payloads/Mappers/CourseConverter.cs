@@ -3,7 +3,7 @@ using QuanLyKhoaHoc.Domain.Entities;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
-    public class KhoaHocConverter
+    public class CourseConverter
     {
         public DataResponseKhoaHoc EntityToDTO(KhoaHoc khoaHoc)
         {

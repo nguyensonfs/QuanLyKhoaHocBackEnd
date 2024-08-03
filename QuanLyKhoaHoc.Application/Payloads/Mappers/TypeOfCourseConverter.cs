@@ -4,10 +4,10 @@ using QuanLyKhoaHoc.Infrastructure.DataContexts;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
-    public class LoaiKhoaHocConverter
+    public class TypeOfCourseConverter
     {
         private readonly AppDBContext _dbContext;
-        public LoaiKhoaHocConverter(AppDBContext dbContext)
+        public TypeOfCourseConverter(AppDBContext dbContext)
         {
             _dbContext = dbContext;
         }

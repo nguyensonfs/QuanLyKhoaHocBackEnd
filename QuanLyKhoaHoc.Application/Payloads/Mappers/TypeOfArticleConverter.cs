@@ -5,14 +5,8 @@ using QuanLyKhoaHoc.Infrastructure.DataContexts;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
-    public class LoaiBaiVietConverter
+    public class TypeOfArticleConverter
     {
-        private readonly AppDBContext _dbContext;
-        public LoaiBaiVietConverter(AppDBContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public DataResponseLoaiBaiViet EntityToDTO(LoaiBaiViet loaiBaiViet)
         {
             return new DataResponseLoaiBaiViet
