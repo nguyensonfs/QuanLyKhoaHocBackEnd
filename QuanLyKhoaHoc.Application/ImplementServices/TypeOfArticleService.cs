@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfArticleRequests;
-using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiBaiViet;
+using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataTypeOfArticle;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
 using QuanLyKhoaHoc.Domain.InterfaceRepositories;
@@ -12,73 +12,28 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 {
     public class TypeOfArticleService : ITypeOfArticleService
     {
-        private readonly IBaseRepository<LoaiBaiViet> _baseLoaiBaiVietRepository;
-        private readonly TypeOfArticleConverter _converter;
+        private readonly IBaseRepository<LoaiBaiViet> _baseTypeOfArticleRepository;
+        private readonly TypeOfArticleConverter _typeOfArticleConverter;
 
-        public TypeOfArticleService(IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository, TypeOfArticleConverter converter)
+        public TypeOfArticleService(IBaseRepository<LoaiBaiViet> baseTypeOfArticleRepository,
+                                    TypeOfArticleConverter typeOfArticleConverter)
         {
-            _baseLoaiBaiVietRepository = baseLoaiBaiVietRepository;
-            _converter = converter;
+            _baseTypeOfArticleRepository = baseTypeOfArticleRepository;
+            _typeOfArticleConverter = typeOfArticleConverter;
         }
-
-        public async Task<ResponseObject<DataResponseLoaiBaiViet>> UpdateTypeOfArticle(int typeofArticleId, Request_UpdateTypeOfArticle request)
+        public async Task<IQueryable<DataResponseTypeOfArticle>> GetAllTypeOfArticles()
         {
-            try
-            {
-                var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(typeofArticleId);
-                if (loaiBaiViet == null)
-                {
-                    return new ResponseObject<DataResponseLoaiBaiViet>
-                    {
-                        Status = StatusCodes.Status400BadRequest,
-                        Message = "Không tìm thấy loại bài viết",
-                        Data = null,
-                    };
-                }
-                if (string.IsNullOrEmpty(request.TenLoaiBaiViet))
-                {
-                    return new ResponseObject<DataResponseLoaiBaiViet>
-                    {
-                        Status = StatusCodes.Status400BadRequest,
-                        Message = "Vui lòng điền đầy đủ thông tin",
-                        Data = null,
-                    };
-                }
-                loaiBaiViet.TenLoai = request.TenLoaiBaiViet;
-                loaiBaiViet = await _baseLoaiBaiVietRepository.UpdateAsync(loaiBaiViet);
-
-                return new ResponseObject<DataResponseLoaiBaiViet>
-                {
-                    Status = StatusCodes.Status201Created,
-                    Message = "Cập nhật loại bài viết thành công",
-                    Data = _converter.EntityToDTO(loaiBaiViet)
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseObject<DataResponseLoaiBaiViet>
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Message = "Có lỗi: " + ex.Message,
-                    Data = null,
-                };
-            }
-        }
-
-        public async Task<IQueryable<DataResponseLoaiBaiViet>> GetAllTypeOfArticles()
-        {
-            var loaiBaiViets = await _baseLoaiBaiVietRepository.GetAllAsync().Result.ToListAsync();
-            var dtoList = loaiBaiViets.Select(x => _converter.EntityToDTO(x)).AsQueryable();
+            var loaiBaiViets = await _baseTypeOfArticleRepository.GetAllAsync().Result.ToListAsync();
+            var dtoList = loaiBaiViets.Select(x => _typeOfArticleConverter.EntityToDTO(x)).AsQueryable();
             return dtoList;
         }
-
-        public async Task<ResponseObject<DataResponseLoaiBaiViet>> CreateTypeOfArticle(Request_CreateTypeOfArticle request)
+        public async Task<ResponseObject<DataResponseTypeOfArticle>> CreateTypeOfArticle(Request_CreateTypeOfArticle request)
         {
             try
             {
                 if (string.IsNullOrEmpty(request.TenLoaiBaiViet))
                 {
-                    return new ResponseObject<DataResponseLoaiBaiViet>
+                    return new ResponseObject<DataResponseTypeOfArticle>
                     {
                         Status = StatusCodes.Status400BadRequest,
                         Message = "Vui lòng điền đầy đủ thông tin",
@@ -91,18 +46,18 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     TenLoai = request.TenLoaiBaiViet,
                 };
 
-                loaiBaiViet = await _baseLoaiBaiVietRepository.CreateAsync(loaiBaiViet);
+                loaiBaiViet = await _baseTypeOfArticleRepository.CreateAsync(loaiBaiViet);
 
-                return new ResponseObject<DataResponseLoaiBaiViet>
+                return new ResponseObject<DataResponseTypeOfArticle>
                 {
                     Status = StatusCodes.Status201Created,
                     Message = "Tạo loại bài viết thành công",
-                    Data = _converter.EntityToDTO(loaiBaiViet)
+                    Data = _typeOfArticleConverter.EntityToDTO(loaiBaiViet)
                 };
             }
             catch (Exception e)
             {
-                return new ResponseObject<DataResponseLoaiBaiViet>
+                return new ResponseObject<DataResponseTypeOfArticle>
                 {
                     Status = StatusCodes.Status500InternalServerError,
                     Message = "Có lỗi: " + e.Message,
@@ -110,15 +65,57 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 };
             }
         }
+        public async Task<ResponseObject<DataResponseTypeOfArticle>> UpdateTypeOfArticle(int typeofArticleId, Request_UpdateTypeOfArticle request)
+        {
+            try
+            {
+                var loaiBaiViet = await _baseTypeOfArticleRepository.GetByIdAsync(typeofArticleId);
+                if (loaiBaiViet == null)
+                {
+                    return new ResponseObject<DataResponseTypeOfArticle>
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Message = "Không tìm thấy loại bài viết",
+                        Data = null,
+                    };
+                }
+                if (string.IsNullOrEmpty(request.TenLoaiBaiViet))
+                {
+                    return new ResponseObject<DataResponseTypeOfArticle>
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Message = "Vui lòng điền đầy đủ thông tin",
+                        Data = null,
+                    };
+                }
+                loaiBaiViet.TenLoai = request.TenLoaiBaiViet;
+                loaiBaiViet = await _baseTypeOfArticleRepository.UpdateAsync(loaiBaiViet);
 
+                return new ResponseObject<DataResponseTypeOfArticle>
+                {
+                    Status = StatusCodes.Status201Created,
+                    Message = "Cập nhật loại bài viết thành công",
+                    Data = _typeOfArticleConverter.EntityToDTO(loaiBaiViet)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject<DataResponseTypeOfArticle>
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Message = "Có lỗi: " + ex.Message,
+                    Data = null,
+                };
+            }
+        }
         public async Task<string> DeleteTypeOfArticle(int typeOfArticleId)
         {
-            var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(typeOfArticleId);
+            var loaiBaiViet = await _baseTypeOfArticleRepository.GetByIdAsync(typeOfArticleId);
             if (loaiBaiViet == null)
             {
                 return "không tìm thấy loại bài viết";
             }
-            await _baseLoaiBaiVietRepository.DeleteAsync(typeOfArticleId);
+            await _baseTypeOfArticleRepository.DeleteAsync(typeOfArticleId);
             return "Xoá thành công";
         }
     }

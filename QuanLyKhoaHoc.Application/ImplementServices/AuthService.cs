@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using QuanLyKhoaHoc.Application.InterfaceServices;
@@ -18,28 +17,28 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 {
     public class AuthService : IAuthService
     {
-        private readonly IBaseRepository<TaiKhoan> _baseTaiKhoanRepository;
+        private readonly IBaseRepository<TaiKhoan> _baseAccountRepository;
         private readonly IConfiguration _configuration;
-        private readonly AccountConverter _converter;
-        private readonly IBaseRepository<QuyenHan> _baseQuyenHanRepository;
+        private readonly AccountConverter _accountConverter;
+        private readonly IBaseRepository<QuyenHan> _baseRoleRepository;
         private readonly IBaseRepository<RefreshToken> _baseRefreshTokenRepository;
 
-        public AuthService(IBaseRepository<TaiKhoan> baseTaiKhoanRepository,
+        public AuthService(IBaseRepository<TaiKhoan> baseAccountRepository,
                            IConfiguration configuration,
-                           AccountConverter converter,
-                           IBaseRepository<QuyenHan> baseQuyenHanRepository,
+                           AccountConverter accountConverter,
+                           IBaseRepository<QuyenHan> baseRoleRepository,
                            IBaseRepository<RefreshToken> baseRefreshTokenRepository)
         {
-            _baseTaiKhoanRepository = baseTaiKhoanRepository;
+            _baseAccountRepository = baseAccountRepository;
             _configuration = configuration;
-            _converter = converter;
-            _baseQuyenHanRepository = baseQuyenHanRepository;
+            _accountConverter = accountConverter;
+            _baseRoleRepository = baseRoleRepository;
             _baseRefreshTokenRepository = baseRefreshTokenRepository;
         }
 
         public async Task<ResponseObject<DataResponseLogin>> GetJwtTokenAsync(TaiKhoan taiKhoan)
         {
-            var role = await _baseQuyenHanRepository.GetByIdAsync(taiKhoan.QuyenHanID);
+            var role = await _baseRoleRepository.GetByIdAsync(taiKhoan.QuyenHanID);
 
             var authClaims = new List<Claim>
             {
@@ -73,12 +72,13 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
         public async Task<ResponseObject<DataResponseLogin>> Login(Request_Login request)
         {
-            var user = await _baseTaiKhoanRepository.GetAsync(x=>x.TenDangNhap.Equals(request.TenDangNhap));
-            if (user == null) { 
+            var user = await _baseAccountRepository.GetAsync(x => x.TenDangNhap.Equals(request.TenDangNhap));
+            if (user == null)
+            {
                 return new ResponseObject<DataResponseLogin>
                 {
                     Status = StatusCodes.Status400BadRequest,
-                    Message = "Sai tên tài khoản",
+                    Message = "Tài khoản không tồn tại",
                     Data = null
                 };
             }

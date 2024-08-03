@@ -1,13 +1,13 @@
-﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataChuDe;
+﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataTopic;
 using QuanLyKhoaHoc.Domain.Entities;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
     public class TopicConverter
     {
-        public DataResponseChuDe EntityToDTO(ChuDe chuDe)
+        public DataResponseTopic EntityToDTO(ChuDe chuDe)
         {
-            return new DataResponseChuDe
+            return new DataResponseTopic
             {
                 ChuDeID = chuDe.ChuDeID,
                 TenChuDe = chuDe.TenChuDe,

@@ -1,6 +1,6 @@
-﻿namespace QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataChuDe
+﻿namespace QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataTopic
 {
-    public class DataResponseChuDe
+    public class DataResponseTopic
     {
 
         public int ChuDeID { get; set; }

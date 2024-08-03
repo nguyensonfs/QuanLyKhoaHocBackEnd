@@ -1,4 +1,4 @@
-﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataQuyenHan;
+﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataRole;
 using QuanLyKhoaHoc.Domain.Entities;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
@@ -6,9 +6,9 @@ namespace QuanLyKhoaHoc.Application.Payloads.Mappers
     public class RoleConverter
     {
         public RoleConverter() { }
-        public DataResponseQuyenHan EntityToDTO(QuyenHan quyenHan)
+        public DataResponseRole EntityToDTO(QuyenHan quyenHan)
         {
-            return new DataResponseQuyenHan
+            return new DataResponseRole
             {
                 Id = quyenHan.QuyenHanID,
                 TenQuyenHan = quyenHan.TenQuyenHan

@@ -1,13 +1,13 @@
-﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataKhoaHoc;
+﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataCourse;
 using QuanLyKhoaHoc.Domain.Entities;
 
 namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
     public class CourseConverter
     {
-        public DataResponseKhoaHoc EntityToDTO(KhoaHoc khoaHoc)
+        public DataResponseCourse EntityToDTO(KhoaHoc khoaHoc)
         {
-            return new DataResponseKhoaHoc
+            return new DataResponseCourse
             {
                 KhoaHocID = khoaHoc.KhoaHocID,
                 TenKhoaHoc = khoaHoc.TenKhoaHoc,

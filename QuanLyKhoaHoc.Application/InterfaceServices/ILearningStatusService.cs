@@ -6,9 +6,9 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
 {
     public interface ILearningStatusService
     {
-        Task<IQueryable<DataResponseStudentStatus>> GetAllLearningStatuses();
-        Task<ResponseObject<DataResponseStudentStatus>> CreateLearningStatus(Request_CreateLearningStatus request);
-        Task<ResponseObject<DataResponseStudentStatus>> UpdateLearningStatus(int studentStatusId, Request_UpdateLearningStatus request);
+        Task<IQueryable<DataResponseLearningStatus>> GetAllLearningStatuses();
+        Task<ResponseObject<DataResponseLearningStatus>> CreateLearningStatus(Request_CreateLearningStatus request);
+        Task<ResponseObject<DataResponseLearningStatus>> UpdateLearningStatus(int studentStatusId, Request_UpdateLearningStatus request);
         Task<string> DeleteLearningStatus(int statusId);
     }
 }

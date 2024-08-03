@@ -1,4 +1,4 @@
-﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiKhoaHoc;
+﻿using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataTypeOfCourse;
 using QuanLyKhoaHoc.Domain.Entities;
 using QuanLyKhoaHoc.Infrastructure.DataContexts;
 
@@ -6,15 +6,9 @@ namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
     public class TypeOfCourseConverter
     {
-        private readonly AppDBContext _dbContext;
-        public TypeOfCourseConverter(AppDBContext dbContext)
+        public DataResponseTypeOfCourse EntityToDTO(LoaiKhoaHoc loaiKhoaHoc)
         {
-            _dbContext = dbContext;
-        }
-
-        public DataResponseLoaiKhoaHoc EntityToDTO(LoaiKhoaHoc loaiKhoaHoc)
-        {
-            return new DataResponseLoaiKhoaHoc
+            return new DataResponseTypeOfCourse
             {
                 Id = loaiKhoaHoc.LoaiKhoaHocID,
                 TenLoaiKhoaHoc = loaiKhoaHoc.TenLoai,

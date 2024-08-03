@@ -1,6 +1,6 @@
-﻿namespace QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataKhoaHoc
+﻿namespace QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataCourse
 {
-    public class DataResponseKhoaHoc
+    public class DataResponseCourse
     {
 
         public int KhoaHocID { get; set; }

@@ -12,29 +12,29 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 {
     public class LearningStatusService : ILearningStatusService
     {
-        private readonly IBaseRepository<TinhTrangHoc> _baseTinhTrangHocRepository;
+        private readonly IBaseRepository<TinhTrangHoc> _baseLearningStatusRepository;
         private readonly LearningStatusConverter _learningStatusConverter;
 
-        public LearningStatusService(IBaseRepository<TinhTrangHoc> baseTinhTrangHocRepository,
+        public LearningStatusService(IBaseRepository<TinhTrangHoc> baseLearningStatusRepository,
                                     LearningStatusConverter learningStatusConverter)
         {
-            _baseTinhTrangHocRepository = baseTinhTrangHocRepository;
+            _baseLearningStatusRepository = baseLearningStatusRepository;
             _learningStatusConverter = learningStatusConverter;
         }
 
-        public async Task<IQueryable<DataResponseStudentStatus>> GetAllLearningStatuses()
+        public async Task<IQueryable<DataResponseLearningStatus>> GetAllLearningStatuses()
         {
-            var query = await _baseTinhTrangHocRepository.GetAllAsync().Result.ToListAsync();
+            var query = await _baseLearningStatusRepository.GetAllAsync().Result.ToListAsync();
             var dtoList = query.Select(x => _learningStatusConverter.EntityToDTO(x)).AsQueryable();
             return dtoList;
         }
-        public async Task<ResponseObject<DataResponseStudentStatus>> CreateLearningStatus(Request_CreateLearningStatus request)
+        public async Task<ResponseObject<DataResponseLearningStatus>> CreateLearningStatus(Request_CreateLearningStatus request)
         {
             try
             {
                 if (string.IsNullOrEmpty(request.StudentStatusName))
                 {
-                    return new ResponseObject<DataResponseStudentStatus>
+                    return new ResponseObject<DataResponseLearningStatus>
                     {
                         Status = StatusCodes.Status400BadRequest,
                         Message = "Vui lòng điền đầy đủ thông tin",
@@ -47,9 +47,9 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     TenTinhTrang = request.StudentStatusName
                 };
 
-                learningStatus = await _baseTinhTrangHocRepository.CreateAsync(learningStatus);
+                learningStatus = await _baseLearningStatusRepository.CreateAsync(learningStatus);
 
-                return new ResponseObject<DataResponseStudentStatus>
+                return new ResponseObject<DataResponseLearningStatus>
                 {
                     Status = StatusCodes.Status201Created,
                     Message = "Tạo trạng thái học thành công",
@@ -58,7 +58,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
             catch (Exception e)
             {
-                return new ResponseObject<DataResponseStudentStatus>
+                return new ResponseObject<DataResponseLearningStatus>
                 {
                     Status = StatusCodes.Status500InternalServerError,
                     Message = "Có lỗi: " + e.Message,
@@ -66,14 +66,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 };
             }
         }
-        public async Task<ResponseObject<DataResponseStudentStatus>> UpdateLearningStatus(int studentStatusId, Request_UpdateLearningStatus request)
+        public async Task<ResponseObject<DataResponseLearningStatus>> UpdateLearningStatus(int studentStatusId, Request_UpdateLearningStatus request)
         {
             try
             {
-                var learningStatus = await _baseTinhTrangHocRepository.GetByIdAsync(studentStatusId);
+                var learningStatus = await _baseLearningStatusRepository.GetByIdAsync(studentStatusId);
                 if (learningStatus == null)
                 {
-                    return new ResponseObject<DataResponseStudentStatus>
+                    return new ResponseObject<DataResponseLearningStatus>
                     {
                         Status = StatusCodes.Status400BadRequest,
                         Message = "Trạng thái học không tồn tại",
@@ -82,7 +82,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 }
                 if (string.IsNullOrEmpty(request.StudentStatusName))
                 {
-                    return new ResponseObject<DataResponseStudentStatus>
+                    return new ResponseObject<DataResponseLearningStatus>
                     {
                         Status = StatusCodes.Status400BadRequest,
                         Message = "Vui lòng điền đầy đủ thông tin",
@@ -90,9 +90,9 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     };
                 }
                 learningStatus.TenTinhTrang = request.StudentStatusName;
-                learningStatus = await _baseTinhTrangHocRepository.UpdateAsync(learningStatus);
+                learningStatus = await _baseLearningStatusRepository.UpdateAsync(learningStatus);
 
-                return new ResponseObject<DataResponseStudentStatus>
+                return new ResponseObject<DataResponseLearningStatus>
                 {
                     Status = StatusCodes.Status201Created,
                     Message = "Cập nhật trạng thái học thành công",
@@ -101,7 +101,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
             catch (Exception ex)
             {
-                return new ResponseObject<DataResponseStudentStatus>
+                return new ResponseObject<DataResponseLearningStatus>
                 {
                     Status = StatusCodes.Status500InternalServerError,
                     Message = "Có lỗi: " + ex.Message,
@@ -111,12 +111,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
         }
         public async Task<string> DeleteLearningStatus(int statusId)
         {
-            var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(statusId);
+            var studentStatus = await _baseLearningStatusRepository.GetByIdAsync(statusId);
             if (studentStatus == null)
             {
                 return "Trạng thái học không tồn tại";
             }
-            await _baseTinhTrangHocRepository.DeleteAsync(statusId);
+            await _baseLearningStatusRepository.DeleteAsync(statusId);
             return "Xoá thành công";
         }
     }

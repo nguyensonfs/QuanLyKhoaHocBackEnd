@@ -5,9 +5,9 @@ namespace QuanLyKhoaHoc.Application.Payloads.Mappers
 {
     public class LearningStatusConverter
     {
-        public DataResponseStudentStatus EntityToDTO(TinhTrangHoc tinhTrangHoc)
+        public DataResponseLearningStatus EntityToDTO(TinhTrangHoc tinhTrangHoc)
         {
-            return new DataResponseStudentStatus
+            return new DataResponseLearningStatus
             {
                 Id = tinhTrangHoc.TinhTrangHocID,
                 TenTinhTrang = tinhTrangHoc.TenTinhTrang
