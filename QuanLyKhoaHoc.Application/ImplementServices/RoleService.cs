@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.RoleRequests;
@@ -22,11 +23,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _roleConverter = roleConverter;
         }
 
-        public async Task<IQueryable<DataResponseRole>> GetAllRoles()
+        public async Task<PageResult<DataResponseRole>> GetAllRoles(int pageSize, int pageNumber)
         {
-            var loaiQuyenHan = await _baseRoleRepository.GetAllAsync().Result.ToListAsync();
-            var dtoList = loaiQuyenHan.Select(x => _roleConverter.EntityToDTO(x)).AsQueryable();
-            return dtoList;
+            var roles = await _baseRoleRepository.GetAllAsync().Result.ToListAsync();
+            var query = roles.Select(x => _roleConverter.EntityToDTO(x)).AsQueryable();
+            var result = Pagination.GetPagedData(query, pageSize, pageNumber);
+            return result;
         }
         public async Task<ResponseObject<DataResponseRole>> CreateRole(Request_CreateRole request)
         {
