@@ -8,17 +8,16 @@ using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataChuDe;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
 using QuanLyKhoaHoc.Domain.InterfaceRepositories;
-using System;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class ChuDeService : IChuDeService
+    public class TopicService : ITopicService
     {
         private readonly IBaseRepository<ChuDe> _baseChuDeRepository;
         private readonly ChuDeConverter _chuDeConverter;
         private readonly IBaseRepository<LoaiBaiViet> _baseLoaiBaiVietRepository;
 
-        public ChuDeService(IBaseRepository<ChuDe> baseChuDeRepository, ChuDeConverter chuDeConverter, IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository)
+        public TopicService(IBaseRepository<ChuDe> baseChuDeRepository, ChuDeConverter chuDeConverter, IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository)
         {
             _baseChuDeRepository = baseChuDeRepository;
             _chuDeConverter = chuDeConverter;
@@ -65,6 +64,17 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     Data = null
                 };
             }
+        }
+
+        public async Task<string> DeleteTopic(int topicId)
+        {
+            var topic = await _baseChuDeRepository.GetByIdAsync(topicId);
+            if (topic == null)
+            {
+                return "Không tìm thấy khoá học";
+            }
+            await _baseChuDeRepository.DeleteAsync(topicId);
+            return "Xoá thành công";
         }
 
         public async Task<PageResult<DataResponseChuDe>> GetAlls(int pageSize, int pageNumber)
@@ -144,5 +154,8 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 };
             }
         }
+
     }
+
 }
+

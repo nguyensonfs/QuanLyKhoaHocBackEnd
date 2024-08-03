@@ -22,7 +22,7 @@ namespace QuanLyKhoaHoc.Application.Extensions
             services.AddScoped<IKhoaHocService, KhoaHocService>();
 
             services.AddScoped<ChuDeConverter>();
-            services.AddScoped<IChuDeService, ChuDeService>();
+            services.AddScoped<ITopicService, TopicService>();
 
             services.AddScoped<StudentConverter>();
             services.AddScoped<IStudentService, StudentService>();

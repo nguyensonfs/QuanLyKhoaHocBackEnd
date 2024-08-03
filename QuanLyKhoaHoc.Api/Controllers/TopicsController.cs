@@ -8,34 +8,41 @@ namespace QuanLyKhoaHoc.Api.Controllers
     [ApiController]
     public class TopicsController : ControllerBase
     {
-        private readonly IChuDeService _chuDeService;
+        private readonly ITopicService _topicService;
 
-        public TopicsController(IChuDeService chuDeService)
+        public TopicsController(ITopicService topicService)
         {
-            _chuDeService = chuDeService;
+            _topicService = topicService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllsChuDe(int pageSize = 10, int pageNumber = 1)
         {
-            return Ok(await _chuDeService.GetAlls(pageSize, pageNumber));
+            return Ok(await _topicService.GetAlls(pageSize, pageNumber));
         }
         [HttpGet("{topicId}")]
         public async Task<IActionResult> GetChuDeById(int topicId)
         {
-            return Ok(await _chuDeService.GetChuDeById(topicId));
+            return Ok(await _topicService.GetChuDeById(topicId));
         }
 
         [HttpPost]
         public async Task<IActionResult> ThemChuDe([FromBody] Request_AddChuDe request)
         {
-            return Ok(await _chuDeService.AddChuDe(request));
+            return Ok(await _topicService.AddChuDe(request));
         }
 
         [HttpPut("{topicId}")]
         public async Task<IActionResult> CapNhatChuDe(int topicId, [FromBody] Request_EditChuDe request)
         {
-            return Ok(await _chuDeService.UpdateChuDe(topicId,request));
+            return Ok(await _topicService.UpdateChuDe(topicId, request));
         }
+
+        [HttpDelete("{topicId}")]
+        public async Task<IActionResult> Delete(int topicId)
+        {
+            return Ok(await _topicService.DeleteTopic(topicId));    
+        }
+
     }
 }

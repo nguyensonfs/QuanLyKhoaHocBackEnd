@@ -5,11 +5,12 @@ using QuanLyKhoaHoc.Application.Payloads.Responses;
 
 namespace QuanLyKhoaHoc.Application.InterfaceServices
 {
-    public interface IChuDeService
+    public interface ITopicService
     {
         Task<ResponseObject<DataResponseChuDe>> AddChuDe(Request_AddChuDe request);
         Task<ResponseObject<DataResponseChuDe>> UpdateChuDe(int topicId,Request_EditChuDe request);
         Task<PageResult<DataResponseChuDe>> GetAlls(int pageSize, int pageNumber);
         Task<ResponseObject<DataResponseChuDe>> GetChuDeById(int chuDeId);
+        Task<string> DeleteTopic(int topicId);
     }
 }
