@@ -16,34 +16,34 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPagedStudents(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetAll(int pageSize = 10, int pageNumber = 1)
         {
             return Ok(await _studentService.GetAlls(pageSize, pageNumber));
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchStudents([FromQuery] string search, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> Search( string search, int page = 1, int pageSize = 10)
         {
             var result = await _studentService.SearchPagedStudents(search, page, pageSize);
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent([FromForm] Request_AddStudent request)
+        public async Task<IActionResult> Create([FromForm] Request_CreateStudent request)
         {
             return Ok(await _studentService.CreateSudent(request));
         }
 
-        [HttpPut("{studentId}")]
-        public async Task<IActionResult> UpdateSudent(int studentId, [FromForm] Request_UpdateStudent request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] Request_UpdateStudent request)
         {
-            return Ok(await _studentService.UpdateSudent(studentId,request));
+            return Ok(await _studentService.UpdateSudent(id,request));
         }
 
-        [HttpDelete("{studentId}")]
-        public async Task<IActionResult> DeleteStudent([FromRoute] int studentId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete( int id)
         {
-            return Ok(await _studentService.DeleteStudent(studentId));
+            return Ok(await _studentService.DeleteStudent(id));
         }
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentRequests
 {
-    public class Request_AddStudent
+    public class Request_CreateStudent
     {
         public IFormFile? HinhAnh { get; set; }
 

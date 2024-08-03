@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TopicRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -16,32 +16,32 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllsChuDe(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetAll(int pageSize = 10, int pageNumber = 1)
         {
-            return Ok(await _topicService.GetAlls(pageSize, pageNumber));
+            return Ok(await _topicService.GetAllTopics(pageSize, pageNumber));
         }
-        [HttpGet("{topicId}")]
-        public async Task<IActionResult> GetChuDeById(int topicId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTopicById(int id)
         {
-            return Ok(await _topicService.GetChuDeById(topicId));
+            return Ok(await _topicService.GetTopicById(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> ThemChuDe([FromBody] Request_AddChuDe request)
+        public async Task<IActionResult> Create( Request_CreateTopic request)
         {
-            return Ok(await _topicService.AddChuDe(request));
+            return Ok(await _topicService.CreateTopic(request));
         }
 
-        [HttpPut("{topicId}")]
-        public async Task<IActionResult> CapNhatChuDe(int topicId, [FromBody] Request_EditChuDe request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id,  Request_UpdateTopic request)
         {
-            return Ok(await _topicService.UpdateChuDe(topicId, request));
+            return Ok(await _topicService.UpdateTopic(id, request));
         }
 
-        [HttpDelete("{topicId}")]
-        public async Task<IActionResult> Delete(int topicId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _topicService.DeleteTopic(topicId));    
+            return Ok(await _topicService.DeleteTopic(id));    
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿using QuanLyKhoaHoc.Application.Handle.HandlePagination;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TopicRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataChuDe;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 
@@ -7,10 +7,10 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
 {
     public interface ITopicService
     {
-        Task<ResponseObject<DataResponseChuDe>> AddChuDe(Request_AddChuDe request);
-        Task<ResponseObject<DataResponseChuDe>> UpdateChuDe(int topicId,Request_EditChuDe request);
-        Task<PageResult<DataResponseChuDe>> GetAlls(int pageSize, int pageNumber);
-        Task<ResponseObject<DataResponseChuDe>> GetChuDeById(int chuDeId);
+        Task<PageResult<DataResponseChuDe>> GetAllTopics(int pageSize, int pageNumber);
+        Task<ResponseObject<DataResponseChuDe>> GetTopicById(int topicId);
+        Task<ResponseObject<DataResponseChuDe>> CreateTopic(Request_CreateTopic request);
+        Task<ResponseObject<DataResponseChuDe>> UpdateTopic(int topicId,Request_UpdateTopic request);
         Task<string> DeleteTopic(int topicId);
     }
 }

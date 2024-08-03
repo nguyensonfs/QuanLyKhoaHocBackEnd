@@ -29,7 +29,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseUser>> AddAccount(Request_CreateAccount request)
+        public async Task<ResponseObject<DataResponseUser>> CreateAccount(Request_CreateAccount request)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
         }
 
-        public async Task<string> Delete(int accountId)
+        public async Task<string> DeleteAccount(int accountId)
         {
             var acc = await _baseTaiKhoanRepository.GetByIdAsync(accountId);
             if (acc == null)

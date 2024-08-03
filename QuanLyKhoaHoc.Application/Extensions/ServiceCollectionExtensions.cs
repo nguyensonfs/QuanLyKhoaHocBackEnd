@@ -10,16 +10,16 @@ namespace QuanLyKhoaHoc.Application.Extensions
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddScoped<LoaiKhoaHocConverter>();
-            services.AddScoped<ILoaiKhoaHocService, LoaiKhoaHocService>();
+            services.AddScoped<ITypeOfCourseService, LoaiKhoaHocService>();
 
             services.AddScoped<LoaiBaiVietConverter>();
-            services.AddScoped<ILoaiBaiVietService, LoaiBaiVietService>();
+            services.AddScoped<ITypeOfArticleService, TypeOfArticleService>();
 
             services.AddScoped<QuyenHanConverter>();
-            services.AddScoped<IQuyenHanService, QuyenHanService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             services.AddScoped<KhoaHocConverter>();
-            services.AddScoped<IKhoaHocService, KhoaHocService>();
+            services.AddScoped<ICourseService, CourseService>();
 
             services.AddScoped<ChuDeConverter>();
             services.AddScoped<ITopicService, TopicService>();
@@ -27,8 +27,8 @@ namespace QuanLyKhoaHoc.Application.Extensions
             services.AddScoped<StudentConverter>();
             services.AddScoped<IStudentService, StudentService>();
 
-            services.AddScoped<StudentStatusConverter>();
-            services.AddScoped<IStudentStatusService, StudentStatusService>();
+            services.AddScoped<LearningStatusConverter>();
+            services.AddScoped<ILearningStatusService, LearningStatusService>();
 
             services.AddScoped<AccountConverter>();
             services.AddScoped<IAuthService, AuthService>();

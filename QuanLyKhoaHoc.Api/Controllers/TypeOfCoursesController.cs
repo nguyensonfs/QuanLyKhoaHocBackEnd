@@ -8,35 +8,35 @@ namespace QuanLyKhoaHoc.Api.Controllers
     [ApiController]
     public class TypeOfCoursesController : ControllerBase
     {
-        private readonly ILoaiKhoaHocService _loaiKhoaHocService;
+        private readonly ITypeOfCourseService _typeOfCourseService;
 
-        public TypeOfCoursesController(ILoaiKhoaHocService loaiKhoaHocService)
+        public TypeOfCoursesController(ITypeOfCourseService typeOfCourseService)
         {
-            _loaiKhoaHocService = loaiKhoaHocService;
+            _typeOfCourseService = typeOfCourseService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _loaiKhoaHocService.GetAllLoaiKhoahocs());
+            return Ok(await _typeOfCourseService.GetAllTypeOfCourses());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Request_ThemLoaiKhoaHoc request)
+        public async Task<IActionResult> Create(Request_CreateTypeOfCourse request)
         {
-            return Ok(await _loaiKhoaHocService.ThemLoaiKhoaHoc(request));
+            return Ok(await _typeOfCourseService.CreateTypeOfCourse(request));
         }
 
-        [HttpPut("{typeofcourseId}")]
-        public async Task<IActionResult> Upadate(int typeofcourseId, [FromBody] Request_SuaLoaiKhoaHoc request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Upadate(int id, Request_UpdateTypeOfCourse request)
         {
-            return Ok(await _loaiKhoaHocService.CapNhatThongTinLoaiKhoaHoc(typeofcourseId, request));
+            return Ok(await _typeOfCourseService.UpdateTypeOfCourse(id, request));
         }
 
-        [HttpDelete("{typeofcourseId}")]
-        public async Task<IActionResult> Delete([FromRoute] int typeofcourseId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _loaiKhoaHocService.XoaLoaiKhoaHoc(typeofcourseId));
+            return Ok(await _typeOfCourseService.DeleteTypeOfCourse(id));
         }
 
     }

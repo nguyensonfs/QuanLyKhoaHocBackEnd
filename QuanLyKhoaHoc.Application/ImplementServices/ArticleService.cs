@@ -30,7 +30,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _baseChuDeRepository = baseChuDeRepository;
         }
 
-        public async Task<ResponseObject<DataResponseArticle>> AddArticle(Request_Create request)
+        public async Task<ResponseObject<DataResponseArticle>> CreateArticle(Request_CreateArticle request)
         {
             try
             {
@@ -88,18 +88,18 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
         }
 
-        public async Task<string> Delete(int baivietId)
+        public async Task<string> DeleteArticle(int articleId)
         {
-            var article = await _baseBaiVietRepository.GetByIdAsync(baivietId);
+            var article = await _baseBaiVietRepository.GetByIdAsync(articleId);
             if (article == null)
             {
                 return "không tìm thấy bài viết đó";
             }
-            await _baseBaiVietRepository.DeleteAsync(baivietId);
+            await _baseBaiVietRepository.DeleteAsync(articleId);
             return "Xoá thành công";
         }
 
-        public async Task<PageResult<DataResponseArticle>> GetAlls(int pageSize, int pageNumber)
+        public async Task<PageResult<DataResponseArticle>> GetAllArticles(int pageSize, int pageNumber)
         {
             var articles = await _baseBaiVietRepository.GetAllAsync().Result.ToListAsync();
             var query = articles.Select(x => _articleConverter.EntityToDTO(x)).AsQueryable();
@@ -137,7 +137,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return new PageResult<DataResponseArticle>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
         }
 
-        public async Task<ResponseObject<DataResponseArticle>> UpdateArticle(int articleId, Request_Update request)
+        public async Task<ResponseObject<DataResponseArticle>> UpdateArticle(int articleId, Request_UpdateArtice request)
         {
             try
             {

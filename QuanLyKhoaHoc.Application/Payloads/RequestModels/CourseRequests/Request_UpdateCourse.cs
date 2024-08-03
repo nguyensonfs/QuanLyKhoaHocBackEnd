@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests
+namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.CourseRequests
 {
-    public class Request_ThemKhoaHoc
+    public class Request_UpdateCourse
     {
 
         public string TenKhoaHoc { get; set; }

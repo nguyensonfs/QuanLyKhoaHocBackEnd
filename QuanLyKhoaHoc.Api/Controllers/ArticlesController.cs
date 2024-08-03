@@ -16,13 +16,13 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllArticles(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetAll(int pageSize = 10, int pageNumber = 1)
         {
-            return Ok(await _articleService.GetAlls(pageSize, pageNumber));
+            return Ok(await _articleService.GetAllArticles(pageSize, pageNumber));
         }
 
         [HttpGet("byname/{articleName}")]
-        public async Task<IActionResult> GetAllArticles(string articleName)
+        public async Task<IActionResult> GetArticlebyName(string articleName)
         {
             return Ok(await _articleService.GetArticlebyName(articleName));
         }
@@ -36,21 +36,21 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] Request_Create request)
+        public async Task<IActionResult> Create([FromForm] Request_CreateArticle request)
         {
-            return Ok(await _articleService.AddArticle(request));
+            return Ok(await _articleService.CreateArticle(request));
         }
 
-        [HttpPut("{articleId}")]
-        public async Task<IActionResult> UpdateArticle(int articleId, [FromBody] Request_Update request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] Request_UpdateArtice request)
         {
-            return Ok(await _articleService.UpdateArticle(articleId,request));
+            return Ok(await _articleService.UpdateArticle(id,request));
         }
 
-        [HttpDelete("{articleId}")]
-        public async Task<IActionResult> DeleteArticle([FromRoute] int articleId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete( int id)
         {
-            return Ok(await _articleService.Delete(articleId));
+            return Ok(await _articleService.DeleteArticle(id));
         }
     }
 }

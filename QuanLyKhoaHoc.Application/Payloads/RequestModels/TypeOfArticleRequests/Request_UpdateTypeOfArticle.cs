@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiBaiVietRequests
+namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfArticleRequests
 {
-    public class Request_SuaLoaiBaiViet
+    public class Request_UpdateTypeOfArticle
     {
 
         [Required(ErrorMessage = "TenLoaiBaiViet là bắt buộc")]

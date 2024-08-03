@@ -2,30 +2,33 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentStatusRequests;
-using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiKhoaHoc;
-using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataQuyenHan;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.LearningStatusRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataStudentStatus;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
 using QuanLyKhoaHoc.Domain.InterfaceRepositories;
-using System;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class StudentStatusService : IStudentStatusService
+    public class LearningStatusService : ILearningStatusService
     {
         private readonly IBaseRepository<TinhTrangHoc> _baseTinhTrangHocRepository;
-        private readonly StudentStatusConverter _studentStatusConverter;
+        private readonly LearningStatusConverter _learningStatusConverter;
 
-        public StudentStatusService(IBaseRepository<TinhTrangHoc> baseTinhTrangHocRepository,
-                                    StudentStatusConverter studentStatusConverter)
+        public LearningStatusService(IBaseRepository<TinhTrangHoc> baseTinhTrangHocRepository,
+                                    LearningStatusConverter learningStatusConverter)
         {
             _baseTinhTrangHocRepository = baseTinhTrangHocRepository;
-            _studentStatusConverter = studentStatusConverter;
+            _learningStatusConverter = learningStatusConverter;
         }
 
-        public async Task<ResponseObject<DataResponseStudentStatus>> CreateStudentStatus(Request_CreateStudentStatus request)
+        public async Task<IQueryable<DataResponseStudentStatus>> GetAllLearningStatuses()
+        {
+            var query = await _baseTinhTrangHocRepository.GetAllAsync().Result.ToListAsync();
+            var dtoList = query.Select(x => _learningStatusConverter.EntityToDTO(x)).AsQueryable();
+            return dtoList;
+        }
+        public async Task<ResponseObject<DataResponseStudentStatus>> CreateLearningStatus(Request_CreateLearningStatus request)
         {
             try
             {
@@ -39,18 +42,18 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     };
                 }
 
-                var studentStatus = new TinhTrangHoc
+                var learningStatus = new TinhTrangHoc
                 {
                     TenTinhTrang = request.StudentStatusName
                 };
 
-                studentStatus = await _baseTinhTrangHocRepository.CreateAsync(studentStatus);
+                learningStatus = await _baseTinhTrangHocRepository.CreateAsync(learningStatus);
 
                 return new ResponseObject<DataResponseStudentStatus>
                 {
                     Status = StatusCodes.Status201Created,
-                    Message = "Create Success !!!",
-                    Data = _studentStatusConverter.EntityToDTO(studentStatus)
+                    Message = "Tạo trạng thái học thành công",
+                    Data = _learningStatusConverter.EntityToDTO(learningStatus)
                 };
             }
             catch (Exception e)
@@ -63,36 +66,17 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 };
             }
         }
-
-        public async Task<string> Delete(int statusId)
-        {
-            var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(statusId);
-            if (studentStatus == null)
-            {
-                return "Trạng thái không tồn tại";
-            }
-            await _baseTinhTrangHocRepository.DeleteAsync(statusId);
-            return "Xoá thành công";
-        }
-
-        public async Task<IQueryable<DataResponseStudentStatus>> GetAlls()
-        {
-            var query = await _baseTinhTrangHocRepository.GetAllAsync().Result.ToListAsync();
-            var dtoList = query.Select(x => _studentStatusConverter.EntityToDTO(x)).AsQueryable();
-            return dtoList;
-        }
-
-        public async Task<ResponseObject<DataResponseStudentStatus>> UpdateStudentStatus(int studentStatusId, Request_UpdateStudentStatus request)
+        public async Task<ResponseObject<DataResponseStudentStatus>> UpdateLearningStatus(int studentStatusId, Request_UpdateLearningStatus request)
         {
             try
             {
-                var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(studentStatusId);
-                if (studentStatus == null)
+                var learningStatus = await _baseTinhTrangHocRepository.GetByIdAsync(studentStatusId);
+                if (learningStatus == null)
                 {
                     return new ResponseObject<DataResponseStudentStatus>
                     {
                         Status = StatusCodes.Status400BadRequest,
-                        Message = "Trạng thái không tồn tại",
+                        Message = "Trạng thái học không tồn tại",
                         Data = null,
                     };
                 }
@@ -105,14 +89,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                         Data = null,
                     };
                 }
-                studentStatus.TenTinhTrang = request.StudentStatusName;
-                studentStatus = await _baseTinhTrangHocRepository.UpdateAsync(studentStatus);
+                learningStatus.TenTinhTrang = request.StudentStatusName;
+                learningStatus = await _baseTinhTrangHocRepository.UpdateAsync(learningStatus);
 
                 return new ResponseObject<DataResponseStudentStatus>
                 {
                     Status = StatusCodes.Status201Created,
-                    Message = "Cập nhật loại khoá học thành công",
-                    Data = _studentStatusConverter.EntityToDTO(studentStatus)
+                    Message = "Cập nhật trạng thái học thành công",
+                    Data = _learningStatusConverter.EntityToDTO(learningStatus)
                 };
             }
             catch (Exception ex)
@@ -124,6 +108,16 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                     Data = null,
                 };
             }
+        }
+        public async Task<string> DeleteLearningStatus(int statusId)
+        {
+            var studentStatus = await _baseTinhTrangHocRepository.GetByIdAsync(statusId);
+            if (studentStatus == null)
+            {
+                return "Trạng thái học không tồn tại";
+            }
+            await _baseTinhTrangHocRepository.DeleteAsync(statusId);
+            return "Xoá thành công";
         }
     }
 }

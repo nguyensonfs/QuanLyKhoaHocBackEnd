@@ -4,7 +4,7 @@ using QuanLyKhoaHoc.Application.Handle.HandleImage;
 using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.CourseRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataKhoaHoc;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
@@ -12,20 +12,20 @@ using QuanLyKhoaHoc.Domain.InterfaceRepositories;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class KhoaHocService : IKhoaHocService
+    public class CourseService : ICourseService
     {
         private readonly IBaseRepository<KhoaHoc> _baseKhoaHocRepository;
         private readonly IBaseRepository<LoaiKhoaHoc> _baseLoaiKhoaHocRepository;
         private readonly KhoaHocConverter _converter;
 
-        public KhoaHocService(IBaseRepository<KhoaHoc> baseKhoaHocRepository, KhoaHocConverter converter, IBaseRepository<LoaiKhoaHoc> baseLoaiKhoaHocRepository)
+        public CourseService(IBaseRepository<KhoaHoc> baseKhoaHocRepository, KhoaHocConverter converter, IBaseRepository<LoaiKhoaHoc> baseLoaiKhoaHocRepository)
         {
             _baseKhoaHocRepository = baseKhoaHocRepository;
             _baseLoaiKhoaHocRepository = baseLoaiKhoaHocRepository;
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseKhoaHoc>> CapNhatThongTinKhoaHoc(int couseId, Request_SuaKhoaHoc request)
+        public async Task<ResponseObject<DataResponseKhoaHoc>> UpdateCourse(int couseId, Request_UpdateCourse request)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
-        public async Task<PageResult<DataResponseKhoaHoc>> GetAlls(int pageSize, int pageNumber)
+        public async Task<PageResult<DataResponseKhoaHoc>> GetAllCourses(int pageSize, int pageNumber)
         {
             var loaiBaiViets = await _baseKhoaHocRepository.GetAllAsync().Result.ToListAsync();
             var query = loaiBaiViets.Select(x => _converter.EntityToDTO(x)).AsQueryable();
@@ -84,7 +84,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return result;
         }
 
-        public async Task<ResponseObject<DataResponseKhoaHoc>> GetKhoaHocByName(string tenKhoaHoc)
+        public async Task<ResponseObject<DataResponseKhoaHoc>> GetCourseByName(string tenKhoaHoc)
         {
             var khoaHoc = await _baseKhoaHocRepository.GetAsync(x => x.TenKhoaHoc.ToLower().Contains(tenKhoaHoc.ToLower()));
             if (khoaHoc == null)
@@ -106,7 +106,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
         }
 
-        public async Task<PageResult<DataResponseKhoaHoc>> SearchPagedKhoaHocsByName(string tenKhoaHoc, int pageNumber, int pageSize)
+        public async Task<PageResult<DataResponseKhoaHoc>> SearchPagedCoursesByName(string tenKhoaHoc, int pageNumber, int pageSize)
         {
             var query = await _baseKhoaHocRepository.GetAllAsync(kh => kh.TenKhoaHoc.ToLower().Contains(tenKhoaHoc.ToLower()));
             var pagedData = Pagination.GetPagedData(query, pageSize, pageNumber);
@@ -115,7 +115,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return new PageResult<DataResponseKhoaHoc>(convertedItems, pagedData.TotalItems, pagedData.TotalPages, pageNumber, pageSize);
         }
 
-        public async Task<ResponseObject<DataResponseKhoaHoc>> ThemKhoaHoc(Request_ThemKhoaHoc request)
+        public async Task<ResponseObject<DataResponseKhoaHoc>> CreateCourse(Request_CreateCourse request)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
-        public async Task<string> XoaKhoaHoc(int khoaHocID)
+        public async Task<string> DeleteCourse(int khoaHocID)
         {
             var khoaHoc = await _baseKhoaHocRepository.GetByIdAsync(khoaHocID);
             if (khoaHoc == null)

@@ -26,7 +26,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _studentConverter = studentConverter;
         }
 
-        public async Task<ResponseObject<DataResponseStudent>> CreateSudent(Request_AddStudent request)
+        public async Task<ResponseObject<DataResponseStudent>> CreateSudent(Request_CreateStudent request)
         {
             try
             {

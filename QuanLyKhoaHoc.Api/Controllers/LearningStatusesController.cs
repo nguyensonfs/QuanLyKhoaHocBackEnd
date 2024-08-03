@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.StudentStatusRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.LearningStatusRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -8,35 +8,35 @@ namespace QuanLyKhoaHoc.Api.Controllers
     [ApiController]
     public class LearningStatusesController : ControllerBase
     {
-        private readonly IStudentStatusService _studentStatusService;
+        private readonly ILearningStatusService _learningStatusService;
 
-        public LearningStatusesController(IStudentStatusService studentStatusService)
+        public LearningStatusesController(ILearningStatusService learningStatusService)
         {
-            _studentStatusService = studentStatusService;
+            _learningStatusService = learningStatusService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllStatus()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(await _studentStatusService.GetAlls());
+            return Ok(await _learningStatusService.GetAllLearningStatuses());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStudentStatus([FromBody] Request_CreateStudentStatus request)
+        public async Task<IActionResult> Create(Request_CreateLearningStatus request)
         {
-            return Ok(await _studentStatusService.CreateStudentStatus(request));
+            return Ok(await _learningStatusService.CreateLearningStatus(request));
         }
 
-        [HttpPut("{statusId}")]
-        public async Task<IActionResult> UpdateStudentStatus(int statusId, [FromBody] Request_UpdateStudentStatus request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, Request_UpdateLearningStatus request)
         {
-            return Ok(await _studentStatusService.UpdateStudentStatus(statusId, request));
+            return Ok(await _learningStatusService.UpdateLearningStatus(id, request));
         }
 
-        [HttpDelete("{statusId}")]
-        public async Task<IActionResult> DeleteStatus(int statusId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _studentStatusService.Delete(statusId));
+            return Ok(await _learningStatusService.DeleteLearningStatus(id));
         }
     }
 }

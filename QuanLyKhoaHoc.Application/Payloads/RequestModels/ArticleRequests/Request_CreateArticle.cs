@@ -2,13 +2,11 @@
 
 namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.ArticleRequests
 {
-    public class Request_Update
+    public class Request_CreateArticle
     {
-
         public string TenBaiViet { get; set; }
 
         public string TenTacGia { get; set; }
-
 
         public string NoiDung { get; set; }
 

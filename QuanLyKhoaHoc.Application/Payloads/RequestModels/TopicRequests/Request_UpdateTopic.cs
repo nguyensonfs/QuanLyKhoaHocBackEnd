@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests
+namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.TopicRequests
 {
-    public class Request_AddChuDe
+    public class Request_UpdateTopic
     {
+
         [Required]
         public string TenChuDe { get; set; } = string.Empty;
 

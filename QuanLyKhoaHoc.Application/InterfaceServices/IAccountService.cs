@@ -7,11 +7,11 @@ namespace QuanLyKhoaHoc.Application.InterfaceServices
 {
     public interface IAccountService
     {
-        Task<ResponseObject<DataResponseUser>> AddAccount(Request_CreateAccount request);
-        Task<ResponseObject<DataResponseUser>> UpdateAccount(int accountId,Request_UpdateAccount request);
         Task<PageResult<DataResponseUser>> GetAlls(int pageSize, int pageNumber);
         Task<ResponseObject<DataResponseUser>> GetAccountbyName(string keyword);
         Task<PageResult<DataResponseUser>> SearchPagedAccountbyName(string keyword, int pageNumber, int pageSize);
-        Task<string> Delete(int accountId);
+        Task<ResponseObject<DataResponseUser>> CreateAccount(Request_CreateAccount request);
+        Task<ResponseObject<DataResponseUser>> UpdateAccount(int accountId,Request_UpdateAccount request);
+        Task<string> DeleteAccount(int accountId);
     }
 }

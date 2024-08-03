@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.QuyenHanRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.RoleRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -8,35 +8,35 @@ namespace QuanLyKhoaHoc.Api.Controllers
     [ApiController]
     public class RolesController : ControllerBase
     {
-        private readonly IQuyenHanService _quyenHanService;
+        private readonly IRoleService _roleService;
 
-        public RolesController(IQuyenHanService quyenHanService)
+        public RolesController(IRoleService roleService)
         {
-            _quyenHanService = quyenHanService;
+            _roleService = roleService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _quyenHanService.GetAllQuyenHans());
+            return Ok(await _roleService.GetAllRoles());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create( Request_ThemQuyenHan request)
+        public async Task<IActionResult> Create( Request_CreateRole request)
         {
-            return Ok(await _quyenHanService.ThemQuyenHan(request));
+            return Ok(await _roleService.CreateRole(request));
         }
 
-        [HttpPut("{roleId}")]
-        public async Task<IActionResult> Update(int roleId, [FromBody] Request_SuaQuyenHan request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, Request_UpdateRole request)
         {
-            return Ok(await _quyenHanService.CapNhatThongTinQuyenHan(roleId,request));
+            return Ok(await _roleService.UpdateRole(id,request));
         }
 
-        [HttpDelete("{roleId}")]
-        public async Task<IActionResult> Delete( int roleId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete( int id)
         {
-            return Ok(await _quyenHanService.XoaQuyenHan(roleId));
+            return Ok(await _roleService.DeleteRole(id));
         }
     }
 }

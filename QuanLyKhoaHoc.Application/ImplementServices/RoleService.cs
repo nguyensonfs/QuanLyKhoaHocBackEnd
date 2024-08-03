@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.QuyenHanRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.RoleRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataQuyenHan;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
@@ -10,18 +10,18 @@ using QuanLyKhoaHoc.Domain.InterfaceRepositories;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class QuyenHanService : IQuyenHanService
+    public class RoleService : IRoleService
     {
         private readonly IBaseRepository<QuyenHan> _baseQuyenHanRepository;
         private readonly QuyenHanConverter _converter;
 
-        public QuyenHanService(IBaseRepository<QuyenHan> baseQuyenHanRepository, QuyenHanConverter converter)
+        public RoleService(IBaseRepository<QuyenHan> baseQuyenHanRepository, QuyenHanConverter converter)
         {
             _baseQuyenHanRepository = baseQuyenHanRepository;
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseQuyenHan>> CapNhatThongTinQuyenHan(int roleId, Request_SuaQuyenHan request)
+        public async Task<ResponseObject<DataResponseQuyenHan>> UpdateRole(int roleId, Request_UpdateRole request)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 return new ResponseObject<DataResponseQuyenHan>
                 {
                     Status = StatusCodes.Status201Created,
-                    Message = "Cập nhật loại khoá học thành công",
+                    Message = "Cập nhật quyền hạn thành công",
                     Data = _converter.EntityToDTO(quyenHan)
                 };
             }
@@ -65,14 +65,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
-        public async Task<IQueryable<DataResponseQuyenHan>> GetAllQuyenHans()
+        public async Task<IQueryable<DataResponseQuyenHan>> GetAllRoles()
         {
             var loaiQuyenHan = await _baseQuyenHanRepository.GetAllAsync().Result.ToListAsync();
             var dtoList = loaiQuyenHan.Select(x => _converter.EntityToDTO(x)).AsQueryable();
             return dtoList;
         }
 
-        public async Task<ResponseObject<DataResponseQuyenHan>> ThemQuyenHan(Request_ThemQuyenHan request)
+        public async Task<ResponseObject<DataResponseQuyenHan>> CreateRole(Request_CreateRole request)
         {
             try
             {
@@ -111,14 +111,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
-        public async Task<string> XoaQuyenHan(int quyenHanId)
+        public async Task<string> DeleteRole(int roleId)
         {
-            var quyenHan = await _baseQuyenHanRepository.GetByIdAsync(quyenHanId);
+            var quyenHan = await _baseQuyenHanRepository.GetByIdAsync(roleId);
             if (quyenHan == null)
             {
                 return "không tìm thấy quyền hạn đó";
             }
-            await _baseQuyenHanRepository.DeleteAsync(quyenHanId);
+            await _baseQuyenHanRepository.DeleteAsync(roleId);
             return "Xoá thành công";
         }
     }

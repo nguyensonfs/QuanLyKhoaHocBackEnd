@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiBaiVietRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfArticleRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -8,35 +8,35 @@ namespace QuanLyKhoaHoc.Api.Controllers
     [ApiController]
     public class TypeOfArticlesController : ControllerBase
     {
-        private readonly ILoaiBaiVietService _loaiBaiVietService;
+        private readonly ITypeOfArticleService _typeOfArticleService;
 
-        public TypeOfArticlesController(ILoaiBaiVietService loaiBaiVietService)
+        public TypeOfArticlesController(ITypeOfArticleService typeOfArticleService)
         {
-            _loaiBaiVietService = loaiBaiVietService;
+            _typeOfArticleService = typeOfArticleService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _loaiBaiVietService.GetAllLoaiBaiViets());
+            return Ok(await _typeOfArticleService.GetAllTypeOfArticles());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Request_ThemLoaiBaiViet request)
+        public async Task<IActionResult> Create(Request_CreateTypeOfArticle request)
         {
-            return Ok(await _loaiBaiVietService.ThemLoaiBaiViet(request));
+            return Ok(await _typeOfArticleService.CreateTypeOfArticle(request));
         }
 
-        [HttpPut("{typeofArticleId}")]
-        public async Task<IActionResult> CapNhatThongTinLoaiBaiViet(int typeofArticleId, Request_SuaLoaiBaiViet request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, Request_UpdateTypeOfArticle request)
         {
-            return Ok(await _loaiBaiVietService.CapNhatThongTinLoaiBaiViet(typeofArticleId,request));
+            return Ok(await _typeOfArticleService.UpdateTypeOfArticle(id,request));
         }
 
-        [HttpDelete("{typeofArticleId}")]
-        public async Task<IActionResult> Delete(int typeofArticleId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _loaiBaiVietService.XoaLoaiBaiViet(typeofArticleId));
+            return Ok(await _typeOfArticleService.DeleteTypeOfArticle(id));
         }
     }
 }

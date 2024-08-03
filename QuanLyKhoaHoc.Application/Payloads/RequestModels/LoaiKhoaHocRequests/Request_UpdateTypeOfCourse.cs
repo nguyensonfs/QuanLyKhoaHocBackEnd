@@ -2,7 +2,7 @@
 
 namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiKhoaHocRequests
 {
-    public class Request_SuaLoaiKhoaHoc
+    public class Request_UpdateTypeOfCourse
     {
 
         [Required(ErrorMessage = "TenLoaiKhoaHoc là bắt buộc")]

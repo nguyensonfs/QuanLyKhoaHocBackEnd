@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.LoaiBaiVietRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TypeOfArticleRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataLoaiBaiViet;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
@@ -10,18 +10,18 @@ using QuanLyKhoaHoc.Domain.InterfaceRepositories;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class LoaiBaiVietService : ILoaiBaiVietService
+    public class TypeOfArticleService : ITypeOfArticleService
     {
         private readonly IBaseRepository<LoaiBaiViet> _baseLoaiBaiVietRepository;
         private readonly LoaiBaiVietConverter _converter;
 
-        public LoaiBaiVietService(IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository, LoaiBaiVietConverter converter)
+        public TypeOfArticleService(IBaseRepository<LoaiBaiViet> baseLoaiBaiVietRepository, LoaiBaiVietConverter converter)
         {
             _baseLoaiBaiVietRepository = baseLoaiBaiVietRepository;
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseLoaiBaiViet>> CapNhatThongTinLoaiBaiViet(int typeofArticleId, Request_SuaLoaiBaiViet request)
+        public async Task<ResponseObject<DataResponseLoaiBaiViet>> UpdateTypeOfArticle(int typeofArticleId, Request_UpdateTypeOfArticle request)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
                 return new ResponseObject<DataResponseLoaiBaiViet>
                 {
                     Status = StatusCodes.Status201Created,
-                    Message = "Cập nhật loại khoá học thành công",
+                    Message = "Cập nhật loại bài viết thành công",
                     Data = _converter.EntityToDTO(loaiBaiViet)
                 };
             }
@@ -65,14 +65,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
-        public async Task<IQueryable<DataResponseLoaiBaiViet>> GetAllLoaiBaiViets()
+        public async Task<IQueryable<DataResponseLoaiBaiViet>> GetAllTypeOfArticles()
         {
             var loaiBaiViets = await _baseLoaiBaiVietRepository.GetAllAsync().Result.ToListAsync();
             var dtoList = loaiBaiViets.Select(x => _converter.EntityToDTO(x)).AsQueryable();
             return dtoList;
         }
 
-        public async Task<ResponseObject<DataResponseLoaiBaiViet>> ThemLoaiBaiViet(Request_ThemLoaiBaiViet request)
+        public async Task<ResponseObject<DataResponseLoaiBaiViet>> CreateTypeOfArticle(Request_CreateTypeOfArticle request)
         {
             try
             {
@@ -111,14 +111,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             }
         }
 
-        public async Task<string> XoaLoaiBaiViet(int loaiBaiVietId)
+        public async Task<string> DeleteTypeOfArticle(int typeOfArticleId)
         {
-            var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(loaiBaiVietId);
+            var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(typeOfArticleId);
             if (loaiBaiViet == null)
             {
                 return "không tìm thấy loại bài viết";
             }
-            await _baseLoaiBaiVietRepository.DeleteAsync(loaiBaiVietId);
+            await _baseLoaiBaiVietRepository.DeleteAsync(typeOfArticleId);
             return "Xoá thành công";
         }
     }

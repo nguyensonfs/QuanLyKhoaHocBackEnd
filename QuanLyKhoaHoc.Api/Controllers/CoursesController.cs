@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuanLyKhoaHoc.Application.InterfaceServices;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.KhoaHocRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.CourseRequests;
 
 namespace QuanLyKhoaHoc.Api.Controllers
 {
@@ -9,48 +9,48 @@ namespace QuanLyKhoaHoc.Api.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly IKhoaHocService _khoaHocService;
+        private readonly ICourseService _courseService;
 
-        public CoursesController(IKhoaHocService khoaHocService)
+        public CoursesController(ICourseService courseService)
         {
-            _khoaHocService = khoaHocService;
+            _courseService = courseService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllsKhoaHoc(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetAll(int pageSize = 10, int pageNumber = 1)
         {
-            return Ok(await _khoaHocService.GetAlls(pageSize, pageNumber));
+            return Ok(await _courseService.GetAllCourses(pageSize, pageNumber));
         }
 
         [HttpGet("byname/{courseName}")]
-        public async Task<IActionResult> GetKhoaHocByName( string courseName)
+        public async Task<IActionResult> GetCourseByName( string courseName)
         {
-            return Ok(await _khoaHocService.GetKhoaHocByName(courseName));
+            return Ok(await _courseService.GetCourseByName(courseName));
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchPagedKhoaHocsByName(string search, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> SearchPagedCoursesByName(string search, int page = 1, int pageSize = 10)
         {
-            var result = await _khoaHocService.SearchPagedKhoaHocsByName(search, page, pageSize);
+            var result = await _courseService.SearchPagedCoursesByName(search, page, pageSize);
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ThemKhoaHoc([FromForm] Request_ThemKhoaHoc request)
+        public async Task<IActionResult> Create([FromForm] Request_CreateCourse request)
         {
-            return Ok(await _khoaHocService.ThemKhoaHoc(request));
+            return Ok(await _courseService.CreateCourse(request));
         }
 
-        [HttpPut("{couseId}")]
-        public async Task<IActionResult> SuaThongTinKhoaHoc(int couseId, [FromForm] Request_SuaKhoaHoc request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] Request_UpdateCourse request)
         {
-            return Ok(await _khoaHocService.CapNhatThongTinKhoaHoc(couseId,request));
+            return Ok(await _courseService.UpdateCourse(id,request));
         }
 
-        [HttpDelete("{couseId}")]
-        public async Task<IActionResult> XoaKhoaHoc([FromRoute] int couseId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete( int id)
         {
-            return Ok(await _khoaHocService.XoaKhoaHoc(couseId));
+            return Ok(await _courseService.DeleteCourse(id));
         }
     }
 }

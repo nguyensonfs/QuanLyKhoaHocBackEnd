@@ -13,6 +13,6 @@ namespace QuanLyKhoaHoc.Application.Payloads.RequestModels.RegistrationRequests
 
         public int TaiKhoanID { get; set; }
 
-        public Request_AddStudent Student { get; set; }
+        public Request_CreateStudent Student { get; set; }
     }
 }

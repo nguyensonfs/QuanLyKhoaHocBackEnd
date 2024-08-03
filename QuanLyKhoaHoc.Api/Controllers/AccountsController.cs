@@ -16,14 +16,14 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAccounts(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetAll(int pageSize = 10, int pageNumber = 1)
         {
             return Ok(await _accountService.GetAlls(pageSize, pageNumber));
         }
 
         // GET: api/accounts/byname/{accountName}
         [HttpGet("byname/{accountName}")]
-        public async Task<IActionResult> GetAllAccountByName(string accountName)
+        public async Task<IActionResult> GetAccountByName(string accountName)
         {
             return Ok(await _accountService.GetAccountbyName(accountName));
         }
@@ -38,21 +38,21 @@ namespace QuanLyKhoaHoc.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAccount([FromForm] Request_CreateAccount request)
+        public async Task<IActionResult> Create( Request_CreateAccount request)
         {
-            return Ok(await _accountService.AddAccount(request));
+            return Ok(await _accountService.CreateAccount(request));
         }
 
-        [HttpPut("{accountId}")]
-        public async Task<IActionResult> UpdateAccount(int accountId, [FromBody] Request_UpdateAccount request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id,  Request_UpdateAccount request)
         {
-            return Ok(await _accountService.UpdateAccount(accountId, request));
+            return Ok(await _accountService.UpdateAccount(id, request));
         }
 
-        [HttpDelete("{accountId}")]
-        public async Task<IActionResult> DeleteAccount([FromRoute] int accountId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete( int id)
         {
-            return Ok(await _accountService.Delete(accountId));
+            return Ok(await _accountService.DeleteAccount(id));
         }
 
     }

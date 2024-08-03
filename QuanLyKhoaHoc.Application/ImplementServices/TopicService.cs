@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
-using QuanLyKhoaHoc.Application.Payloads.RequestModels.ChuDeRequests;
+using QuanLyKhoaHoc.Application.Payloads.RequestModels.TopicRequests;
 using QuanLyKhoaHoc.Application.Payloads.ResponseModels.DataChuDe;
 using QuanLyKhoaHoc.Application.Payloads.Responses;
 using QuanLyKhoaHoc.Domain.Entities;
@@ -24,17 +24,17 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _baseLoaiBaiVietRepository = baseLoaiBaiVietRepository;
         }
 
-        public async Task<ResponseObject<DataResponseChuDe>> AddChuDe(Request_AddChuDe request)
+        public async Task<ResponseObject<DataResponseChuDe>> CreateTopic(Request_CreateTopic request)
         {
             try
             {
-                var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync((int)request.LoaiBaiVietID);
+                var loaiBaiViet = await _baseLoaiBaiVietRepository.GetByIdAsync(request.LoaiBaiVietID);
                 if (loaiBaiViet == null)
                 {
                     return new ResponseObject<DataResponseChuDe>
                     {
                         Status = StatusCodes.Status400BadRequest,
-                        Message = "Không tìm thấy loại bài viết",
+                        Message = "Không tìm thấy chủ đề",
                         Data = null
                     };
                 }
@@ -71,13 +71,13 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             var topic = await _baseChuDeRepository.GetByIdAsync(topicId);
             if (topic == null)
             {
-                return "Không tìm thấy khoá học";
+                return "Không tìm thấy chủ đề";
             }
             await _baseChuDeRepository.DeleteAsync(topicId);
             return "Xoá thành công";
         }
 
-        public async Task<PageResult<DataResponseChuDe>> GetAlls(int pageSize, int pageNumber)
+        public async Task<PageResult<DataResponseChuDe>> GetAllTopics(int pageSize, int pageNumber)
         {
             var chuDes = await _baseChuDeRepository.GetAllAsync().Result.ToListAsync();
             var query = chuDes.Select(x => _chuDeConverter.EntityToDTO(x)).AsQueryable();
@@ -85,9 +85,9 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             return result;
         }
 
-        public async Task<ResponseObject<DataResponseChuDe>> GetChuDeById(int chuDeId)
+        public async Task<ResponseObject<DataResponseChuDe>> GetTopicById(int topicId)
         {
-            var chuDe = await _baseChuDeRepository.GetByIdAsync(chuDeId);
+            var chuDe = await _baseChuDeRepository.GetByIdAsync(topicId);
             if (chuDe == null)
             {
                 return new ResponseObject<DataResponseChuDe>
@@ -106,7 +106,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             };
         }
 
-        public async Task<ResponseObject<DataResponseChuDe>> UpdateChuDe(int topicId, Request_EditChuDe request)
+        public async Task<ResponseObject<DataResponseChuDe>> UpdateTopic(int topicId, Request_UpdateTopic request)
         {
             try
             {

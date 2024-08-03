@@ -11,7 +11,7 @@ using QuanLyKhoaHoc.Domain.InterfaceRepositories;
 
 namespace QuanLyKhoaHoc.Application.ImplementServices
 {
-    public class LoaiKhoaHocService : ILoaiKhoaHocService
+    public class LoaiKhoaHocService : ITypeOfCourseService
     {
         private readonly IBaseRepository<LoaiKhoaHoc> _baseLoaiKhoaHocRepository;
         private readonly LoaiKhoaHocConverter _converter;
@@ -22,7 +22,7 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _converter = converter;
         }
 
-        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> CapNhatThongTinLoaiKhoaHoc(int courseId, Request_SuaLoaiKhoaHoc request)
+        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> UpdateTypeOfCourse(int courseId, Request_UpdateTypeOfCourse request)
         {
             try
             {
@@ -68,14 +68,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
 
 
-        public async Task<IQueryable<DataResponseLoaiKhoaHoc>> GetAllLoaiKhoahocs()
+        public async Task<IQueryable<DataResponseLoaiKhoaHoc>> GetAllTypeOfCourses()
         {
             var loaiKhoaHocs = await _baseLoaiKhoaHocRepository.GetAllAsync().Result.ToListAsync();
             var dtoList = loaiKhoaHocs.Select(x => _converter.EntityToDTO(x)).AsQueryable();
             return dtoList;
         }
 
-        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> ThemLoaiKhoaHoc(Request_ThemLoaiKhoaHoc request)
+        public async Task<ResponseObject<DataResponseLoaiKhoaHoc>> CreateTypeOfCourse(Request_CreateTypeOfCourse request)
         {
             try
             {
@@ -115,14 +115,14 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
 
         }
 
-        public async Task<string> XoaLoaiKhoaHoc(int loaiKhoaHocId)
+        public async Task<string> DeleteTypeOfCourse(int typeOfCourseId)
         {
-            var loaiKhoaHoc = await _baseLoaiKhoaHocRepository.GetByIdAsync(loaiKhoaHocId);
+            var loaiKhoaHoc = await _baseLoaiKhoaHocRepository.GetByIdAsync(typeOfCourseId);
             if (loaiKhoaHoc == null)
             {
                 return "không tìm thấy khoá học";
             }
-            await _baseLoaiKhoaHocRepository.DeleteAsync(loaiKhoaHocId);
+            await _baseLoaiKhoaHocRepository.DeleteAsync(typeOfCourseId);
             return "Xoá thành công";
         }
     }
