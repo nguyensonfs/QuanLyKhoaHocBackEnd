@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuanLyKhoaHoc.Application.Extensions;
+using QuanLyKhoaHoc.Application.Handle.HandeSlugifyParameterTransform;
 using QuanLyKhoaHoc.Infrastructure.Extensions;
 using System.Text;
 
@@ -9,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+});
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
