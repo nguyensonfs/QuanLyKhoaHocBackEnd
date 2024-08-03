@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using QuanLyKhoaHoc.Application.Handle.HandlePagination;
 using QuanLyKhoaHoc.Application.InterfaceServices;
 using QuanLyKhoaHoc.Application.Payloads.Mappers;
 using QuanLyKhoaHoc.Application.Payloads.RequestModels.LearningStatusRequests;
@@ -22,11 +23,12 @@ namespace QuanLyKhoaHoc.Application.ImplementServices
             _learningStatusConverter = learningStatusConverter;
         }
 
-        public async Task<IQueryable<DataResponseLearningStatus>> GetAllLearningStatuses()
+        public async Task<PageResult<DataResponseLearningStatus>> GetAllLearningStatuses(int pageSize,int pageNumber)
         {
             var query = await _baseLearningStatusRepository.GetAllAsync().Result.ToListAsync();
             var dtoList = query.Select(x => _learningStatusConverter.EntityToDTO(x)).AsQueryable();
-            return dtoList;
+            var result = Pagination.GetPagedData(dtoList, pageSize, pageNumber);
+            return result;
         }
         public async Task<ResponseObject<DataResponseLearningStatus>> CreateLearningStatus(Request_CreateLearningStatus request)
         {
